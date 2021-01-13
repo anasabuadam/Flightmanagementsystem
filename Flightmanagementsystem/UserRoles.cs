@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class Country : IPoco  , IUser
+    class UserRoles
     {
-        public Int64 Id { get; set; }
-        public string Name { get; set; }
+        public Int32 Id { get; set; }
+        public string Role_Name { get; set; }
 
     }
 }
