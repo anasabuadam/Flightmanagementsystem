@@ -18,5 +18,20 @@ namespace Flightmanagementsystem
             Id = id;
             Name = name;
         }
+
+        public override bool Equals(object obj) => obj is Country country &&
+                   Id == country.Id;
+
+        public override int GetHashCode() => HashCode.Combine(Id);
+
+        public static bool operator !=(Country country, Country country1)
+        {
+            return !(country == country1);
+        }
+        public static bool operator ==(Country country, Country country1)
+        {
+            return country == country1;
+        }
+
     }
 }

@@ -6,6 +6,7 @@ namespace Flightmanagementsystem
 {
     class Administrator : IPoco , IUser
     {
+        User User = new User();
         public Int64 Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
@@ -24,6 +25,23 @@ namespace Flightmanagementsystem
             Level = level;
             User_Id = user_Id;
         }
+
+
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+        public static bool operator !=(Administrator administrator, Administrator administrator1)
+        {
+            return !(administrator == administrator1);
+        }
+        public static bool operator ==(Administrator administrator, Administrator administrator1)
+        {
+            return administrator == administrator1;
+        }
+        public override bool Equals(object obj) => obj is Administrator administrator &&
+                   Id == administrator.Id;
     }
 
 

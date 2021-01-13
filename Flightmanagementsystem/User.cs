@@ -24,5 +24,19 @@ namespace Flightmanagementsystem
             Email = email;
             User_Role = user_Role;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is User user &&
+                   Id == user.Id;
+        }
+        public static bool operator !=(User user, User user1)
+        {
+            return !(user == user1);
+        }
+        public static bool operator ==(User user, User user1)
+        {
+            return user == user1;
+        }
     }
 }

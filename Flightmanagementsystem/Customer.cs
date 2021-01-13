@@ -6,6 +6,7 @@ namespace Flightmanagementsystem
 {
     class Customer : IPoco , IUser
     {
+        User User = new User();
         public Int64 Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
@@ -27,6 +28,20 @@ namespace Flightmanagementsystem
             Phone_No = phone_No;
             Credit_Card_NO = credit_Card_NO;
             User_Id = user_Id;
+        }
+
+        public override bool Equals(object obj) => obj is Customer customer &&
+                   Id == customer.Id;
+
+        public override int GetHashCode() => HashCode.Combine(Id);
+
+        public static bool operator !=(Customer customer, Customer customer1)
+        {
+            return !(customer == customer1);
+        }
+        public static bool operator ==(Customer customer, Customer customer1)
+        {
+            return customer == customer1;
         }
     }
 }

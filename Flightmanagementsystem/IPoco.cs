@@ -6,5 +6,7 @@ namespace Flightmanagementsystem
 {
     interface IPoco
     {
+
     }
+
 }
