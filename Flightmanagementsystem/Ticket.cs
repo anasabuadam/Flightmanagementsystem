@@ -29,6 +29,10 @@ namespace Flightmanagementsystem
             return obj is Ticket ticket &&
                    Id == ticket.Id;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override int GetHashCode()
         {

@@ -26,7 +26,10 @@ namespace Flightmanagementsystem
             User_Id = user_Id;
         }
 
-
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override int GetHashCode()
         {

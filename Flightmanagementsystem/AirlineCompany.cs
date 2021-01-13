@@ -24,6 +24,10 @@ namespace Flightmanagementsystem
             Country_Id = country_Id;
             User_Id = user_Id;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj) => obj is AirlineCompany company &&
                    Id == company.Id;

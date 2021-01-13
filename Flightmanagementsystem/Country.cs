@@ -18,6 +18,10 @@ namespace Flightmanagementsystem
             Id = id;
             Name = name;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj) => obj is Country country &&
                    Id == country.Id;

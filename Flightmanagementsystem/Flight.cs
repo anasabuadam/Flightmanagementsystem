@@ -31,6 +31,10 @@ namespace Flightmanagementsystem
             Landing_Time = landing_Time;
             Remaining_Tickets = remaining_Tickets;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj)
         {

@@ -18,6 +18,10 @@ namespace Flightmanagementsystem
             Id = id;
             Role_Name = role_Name;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj)
         {

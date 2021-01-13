@@ -29,6 +29,10 @@ namespace Flightmanagementsystem
             Credit_Card_NO = credit_Card_NO;
             User_Id = user_Id;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj) => obj is Customer customer &&
                    Id == customer.Id;

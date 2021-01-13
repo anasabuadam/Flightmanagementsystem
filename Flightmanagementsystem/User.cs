@@ -24,6 +24,10 @@ namespace Flightmanagementsystem
             Email = email;
             User_Role = user_Role;
         }
+        public override string ToString()
+        {
+            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+        }
 
         public override bool Equals(object obj)
         {
