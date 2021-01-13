@@ -9,5 +9,14 @@ namespace Flightmanagementsystem
         public Int64 Id { get; set; }
         public string Name { get; set; }
 
+        public Country()
+        {
+        }
+
+        public Country(long id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

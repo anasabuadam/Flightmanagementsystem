@@ -11,5 +11,16 @@ namespace Flightmanagementsystem
         public Int64 Country_Id { get; set; }
         public Int64 User_Id { get; set; }
 
+        public AirlineCompany()
+        {
+        }
+
+        public AirlineCompany(long id, string name, long country_Id, long user_Id)
+        {
+            Id = id;
+            Name = name;
+            Country_Id = country_Id;
+            User_Id = user_Id;
+        }
     }
 }

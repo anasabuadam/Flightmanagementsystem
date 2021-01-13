@@ -12,5 +12,17 @@ namespace Flightmanagementsystem
         public string Email { get; set; }
         public Int32 User_Role { get; set; }
 
+        public User()
+        {
+        }
+
+        public User(long id, string username, string password, string email, int user_Role)
+        {
+            Id = id;
+            Username = username;
+            Password = password;
+            Email = email;
+            User_Role = user_Role;
+        }
     }
 }
