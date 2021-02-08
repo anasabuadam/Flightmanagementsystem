@@ -4,9 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface IUser 
+    interface ICountryDAO
     {
-
     }
 }
-
