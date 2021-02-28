@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -10,97 +11,137 @@ namespace Flightmanagementsystem
         string conn_string = "";
         public void Add()
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+
+
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
-                    cmd.CommandText = "AddCountre";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = sqlConnection1;
+                        cmd.CommandText = "AddCountre";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
-                    sqlConnection1.Open();
+                        sqlConnection1.Open();
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
 
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}" );
+            }
         }
-
         public void Get()
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
-                    cmd.CommandText = "GetAllCountries";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = sqlConnection1;
+                        cmd.CommandText = "GetAllCountries";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
-                    sqlConnection1.Open();
+                        sqlConnection1.Open();
 
-                  cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
+            }
         }
+
 
         public void GetAll()
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
-                    cmd.CommandText = "GetAllCountries";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = sqlConnection1;
+                        cmd.CommandText = "GetAllCountries";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
-                    sqlConnection1.Open();
+                        sqlConnection1.Open();
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
             }
         }
 
+
         public void Remove()
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
-                    cmd.CommandText = "GetAllCountries";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = sqlConnection1;
+                        cmd.CommandText = "RemoveCuntre";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
-                    sqlConnection1.Open();
+                        sqlConnection1.Open();
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
             }
         }
 
         public void Update()
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
-                    cmd.CommandText = "GetAllCountries";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = sqlConnection1;
+                        cmd.CommandText = "UpdateCuntre";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
-                    sqlConnection1.Open();
+                        sqlConnection1.Open();
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
+            }
         }
+
     }
 }
