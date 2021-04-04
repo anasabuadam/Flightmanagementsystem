@@ -67,10 +67,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAll()
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public void GetAllFlightsVacancy()
         {
