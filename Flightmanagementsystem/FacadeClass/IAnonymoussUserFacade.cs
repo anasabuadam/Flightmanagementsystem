@@ -6,10 +6,17 @@ namespace Flightmanagementsystem
 {
     interface IAnonymoussUserFacade
     {
-        void GetAllAirlineCompanies();
-        void GetAllFlights();
-        void GetAllFlightsVacancy();
-        void GetFlightById();
+        IList<Flight> GetAllFlights();
+        IList<AirlineCompany> GetAllAirlineCompanies();
+        Dictionary<Flight, int> GetAllFlightsVacancy();
+        Flight GetFlightById(int id);
+        IList<Flight> GetFlightsByOriginCountry(int countryCode);
+        IList<Flight> GetFlightsByDestinationCountry(int countryCode);
+        IList<Flight> GetFlightsByDepatureDate(DateTime departureDate);
+        IList<Flight> GetFlightsByLandingDate(DateTime landingDate);
+
+        
+       
         void GetFlightsByDepatrureDate();
         void GetFlightsByDestinationCountry();
         void GetFlightsByLandingDate();
