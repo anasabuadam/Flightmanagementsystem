@@ -6,43 +6,42 @@ namespace Flightmanagementsystem.FacadeClass
 {
     class ClassAnonymousUserFacade : IAnonymoussUserFacade
     {
-       
-        public void GetAllAirlineCompanies()
+        public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             throw new NotImplementedException();
         }
 
-        public void GetAllFlights()
+        public IList<Flight> GetAllFlights()
         {
             throw new NotImplementedException();
         }
 
-        public void GetAllFlightsVacancy()
+        public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightById()
+        public Flight GetFlightById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightsByDepatrureDate()
+        public IList<Flight> GetFlightsByDepatureDate(DateTime departureDate)
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightsByDestinationCountry()
+        public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightsByLandingDate()
+        public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightsByOriginCountry()
+        public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
             throw new NotImplementedException();
         }
