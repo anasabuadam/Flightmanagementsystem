@@ -12,6 +12,14 @@ namespace Flightmanagementsystem
         ICustomerDAO customerDAO = new CustomerDAOPGSQL();
         IFlightDAO flightDAO = new FlightDAOPGSQL();
         ITicketDAO Ticket = new TicketDAOPGSQL();
+        protected IAirlineDAO _airlineDAO;
+        protected ICountryDAO _countryDAO;
+        protected ICustomerDAO _customerDAO;
+        protected IAdminDAO _adminDAO;
+        protected IUser _userDAO;
+        protected IFlightDAO _flightDAO;
+        protected ITicketDAO _ticketDAO;
+
 
     }
 }
