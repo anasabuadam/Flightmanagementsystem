@@ -6,8 +6,9 @@ namespace Flightmanagementsystem
 {
     interface IAnonymoussUserFacade
     {
-        IList<Flight> GetAllFlights();
-        IList<AirlineCompany> GetAllAirlineCompanies();
+        IList<Flight> AllFlights { get; }
+        IList<AirlineCompany> AllAirlineCompanies { get; }
+
         Dictionary<Flight, int> GetAllFlightsVacancy();
         Flight GetFlightById(int id);
         IList<Flight> GetFlightsByOriginCountry(int countryCode);
