@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="IPoco.cs">
+    <Compile Update="BasicFolderClass\IPoco.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
