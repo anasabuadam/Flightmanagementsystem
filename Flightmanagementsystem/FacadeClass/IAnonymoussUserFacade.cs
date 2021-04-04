@@ -16,12 +16,7 @@ namespace Flightmanagementsystem
         IList<Flight> GetFlightsByLandingDate(DateTime landingDate);
 
         
-       
-        void GetFlightsByDepatrureDate();
-        void GetFlightsByDestinationCountry();
-        void GetFlightsByLandingDate();
-        void GetFlightsByOriginCountry();
-
+      
 
     }
 }
