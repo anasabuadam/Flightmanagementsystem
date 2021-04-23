@@ -12,10 +12,7 @@ namespace Flightmanagementsystem.FacadeClass
 
         string IAnonymoussUserFacade.conn_string => throw new NotImplementedException();
 
-        public Dictionary<Flight, int> GetAllFlightsVacancy()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 
 }
