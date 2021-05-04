@@ -15,7 +15,7 @@ namespace Flightmanagementsystem
         protected IFlightDAO _flightDAO;
         protected ITicketDAO _ticketDAO;
         public bool? TreatWarningsAsErrors { get; }
-        public FacadeBase(bool test)
+        protected FacadeBase(bool test)
         {
           
             _airlineDAO = new AirlineCompany();

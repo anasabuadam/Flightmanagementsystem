@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-   public interface IAirlineDAO 
+   public interface IAirlineDAO : IBasicDb<Administrator>
     {
         void GetAirlineByUsername();
         void GetAllAirlineByCountry();
