@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace Flightmanagementsystem
 {
-    interface IBasicDb<T>
+ public   interface IBasicDb<T>
     {
         public void Add();
 

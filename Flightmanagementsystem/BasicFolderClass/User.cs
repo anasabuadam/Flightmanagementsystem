@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-     class User : IPoco
+   public  class User : IPoco
     {
         public Int64 Id { get; set; }
         public string Username { get; set; }

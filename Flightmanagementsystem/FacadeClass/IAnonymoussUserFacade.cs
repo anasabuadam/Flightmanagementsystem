@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface IAnonymoussUserFacade
+   internal interface IAnonymoussUserFacade
     {
      
 
         string conn_string { get; }
 
-        public IList<Flight> GetFlights(int id)
+       public  IList<Flight> GetFlights(int id)
         {
             Flight res = null;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
@@ -126,9 +126,9 @@ namespace Flightmanagementsystem
             }
         }
     
-        public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
+       public  IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
-          Flight res = null;
+            Flight res = null ;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
             {
 

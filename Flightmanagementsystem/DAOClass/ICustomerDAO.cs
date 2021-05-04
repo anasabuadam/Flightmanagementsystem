@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface ICustomerDAO : IBasicDb<Customer>
+  public  interface ICustomerDAO : IBasicDb<Customer>
     {
-        void GetCustomerByUsername();
+      public  void GetCustomerByUsername();
 
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class Ticket : IPoco
+   public class Ticket : IPoco
     {
         Flight Flight = new Flight();
         Customer Customer = new Customer();

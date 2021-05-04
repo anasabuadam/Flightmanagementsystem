@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface ICountryDAO : IBasicDb<Country>
+   public interface ICountryDAO : IBasicDb<Country>
     {
       
 

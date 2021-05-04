@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface ITicketDAO : IBasicDb<Ticket>
+   public interface ITicketDAO : IBasicDb<Ticket>
     {
 
     }

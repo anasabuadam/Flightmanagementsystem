@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class Customer : IPoco , IUser
+  public  class Customer : IPoco , IUser
     {
         User User = new User();
         public Int64 Id { get; set; }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class CustomerDAOPGSQL : ICustomerDAO
+  public  class CustomerDAOPGSQL : ICustomerDAO
     {
         string conn_string = "";
         public void Add()

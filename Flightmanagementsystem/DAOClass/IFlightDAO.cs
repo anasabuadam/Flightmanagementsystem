@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface IFlightDAO : IBasicDb<Flight>
+   public interface IFlightDAO : IBasicDb<Flight>
     {
         void GetAllFlightsVacancy();
         void GetFlightById();

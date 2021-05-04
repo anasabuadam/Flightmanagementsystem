@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    interface IAdminDAO : IBasicDb<Administrator>
+   public interface IAdminDAO : IBasicDb<Administrator>
     {
 
     }
