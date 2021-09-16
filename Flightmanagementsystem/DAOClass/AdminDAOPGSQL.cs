@@ -9,7 +9,7 @@ namespace Flightmanagementsystem
     class AdminDAOPGSQL : IAdminDAO
     {
         string conn_string = "";
-        public void Add()
+         Administrator IBasicDb<Administrator>.Add(Administrator t)
         {
 
             try
@@ -39,7 +39,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Get()
+       Administrator IBasicDb<Administrator>.Get()
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAll()
+         IList<Administrator> IBasicDb<Administrator>.GetAll()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Remove()
+       Administrator IBasicDb<Administrator>.Remove(Administrator t)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+        Administrator IBasicDb<Administrator>.Update(Administrator t)
         {
             try
             {

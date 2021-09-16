@@ -10,7 +10,7 @@ namespace Flightmanagementsystem
 
     {
         string conn_string = "";
-        public void Add()
+         AirlineCompany IBasicDb<AirlineCompany>.Add(AirlineCompany t)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Get()
+        AirlineCompany IBasicDb<AirlineCompany>.Get()
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAirlineByUsername()
+                IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAirlineByUsername()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAll()
+         IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAll()
         {
             try
             {
@@ -126,7 +126,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAllAirlineByCountry()
+       IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAllAirlineByCountry()
         {
             try
             {
@@ -155,7 +155,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Remove()
+       AirlineCompany IBasicDb<AirlineCompany>.Remove(AirlineCompany t)
         {
             try
             {
@@ -184,7 +184,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+        AirlineCompany IBasicDb<AirlineCompany>.Update(AirlineCompany t)
         {
             try
             {

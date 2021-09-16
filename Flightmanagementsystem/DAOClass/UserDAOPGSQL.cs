@@ -8,7 +8,7 @@ namespace Flightmanagementsystem.DAOClass
     public class UserDAOPGSQL : IUser
     {
         string conn_string = "";
-        void IBasicDb<User>.Add(User t)
+        User IBasicDb<User>.Add(User t)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Flightmanagementsystem.DAOClass
             return null;
         }
 
-        void IBasicDb<User>.Remove(User t)
+        USER IBasicDb<User>.Remove(User t)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace Flightmanagementsystem.DAOClass
             }
         }
 
-        void IBasicDb<User>.Update(User t)
+        User IBasicDb<User>.Update(User t)
         {
             try
             {

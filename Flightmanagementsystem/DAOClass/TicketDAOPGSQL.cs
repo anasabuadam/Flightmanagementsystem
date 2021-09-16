@@ -9,7 +9,7 @@ namespace Flightmanagementsystem
     class TicketDAOPGSQL : ITicketDAO
     {
         string conn_string = "";
-        public void Add()
+      Ticket IBasicDb<Ticket>.Add(Ticket t)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Get()
+        Ticket IBasicDb<Ticket>.Get(int Id)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAll()
+        IList<Ticket> IBasicDb<Ticket>.GetAll()
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Remove()
+       Ticket IBasicDb<Ticket>.Remove(Ticket t)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+        Ticket IBasicDb<Ticket>.Update(Ticket t)
         {
             try
             {

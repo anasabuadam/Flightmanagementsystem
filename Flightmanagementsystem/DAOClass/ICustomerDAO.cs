@@ -6,7 +6,7 @@ namespace Flightmanagementsystem
 {
   public  interface ICustomerDAO : IBasicDb<Customer>
     {
-      public  void GetCustomerByUsername();
+      public  CustomerDAOPGSQL GetCustomerByUsername();
 
     }
 }

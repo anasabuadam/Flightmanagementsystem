@@ -9,12 +9,11 @@ namespace Flightmanagementsystem
     class FlightDAOPGSQL : IFlightDAO
     {
         string conn_string = "";
-        public void Add()
+         Flight IBasicDb<Flight>.Add()(Flight t)
         {
             try
             {
          
-
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -38,7 +37,8 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Get()
+        Flight IBasicDb<Flight>.Get()
+      
         {
             try
             {
@@ -69,17 +69,17 @@ namespace Flightmanagementsystem
 
       
 
-        public void GetAllFlightsVacancy()
+        IList<Flight> IBasicDb<Flight>.GetAllFlightsVacancy()
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightByCustomer()
+       IList<Flight> IBasicDb<Flight>.GetFlightByCustomer()
         {
             throw new NotImplementedException();
         }
 
-        public void GetFlightByDepartureDate()
+       IList<Flight> IBasicDb<Flight>.GetFlightByDepartureDate() 
         {
             try
             {
@@ -108,7 +108,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetFlightByDestinationCountry()
+        IList<Flight> IBasicDb<Flight>.GetFlightByDestinationCountry()
         {
             try
             {
@@ -137,7 +137,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetFlightById()
+        Flight IBasicDb<Flight>.Get(int id)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetFlightByLandingDate()
+       Flight IBasicDb<Flight>.GetFlightByLandingDate()
         {
             try
             {
@@ -195,7 +195,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetFlightByOriginCountry()
+       Flight IBasicDb<Flight>.GetFlightByOriginCountry()
         {
             try
             {
@@ -224,7 +224,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Remove()
+        Flight IBasicDb<Flight>.Remove(Flight t)
         {
             try
             {
@@ -253,7 +253,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+       Flight IBasicDb<Flight>.Update(Flight t)
         {
             try
             {

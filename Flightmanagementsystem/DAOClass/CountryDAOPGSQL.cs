@@ -9,7 +9,7 @@ namespace Flightmanagementsystem
     internal class CountryDAOPGSQL : ICountryDAO
     {
         string conn_string = "";
-        public void Add()
+        Country IBasicDb<Country>.Add(Country t)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Flightmanagementsystem
                 Console.WriteLine($"Failed to run sp from db {ex}" );
             }
         }
-        public void Get()
+       Country IBasicDb<Country>.Get()
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Flightmanagementsystem
         }
 
 
-        public void GetAll()
+        IList<Country> IBasicDb<Country>.GetAll()
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Flightmanagementsystem
         }
 
 
-        public void Remove()
+        Country IBasicDb<Country>.Remove(Country t)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+        Country IBasicDb<Country>.Update(Country t)
         {
             try
             {

@@ -9,7 +9,7 @@ namespace Flightmanagementsystem
   public  class CustomerDAOPGSQL : ICustomerDAO
     {
         string conn_string = "";
-        public void Add()
+        Customer IBasicDb<Customer>.Add(User t)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Get()
+        Customer IBasicDb<Customer>.Get()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetAll()
+       IList<Customer> IBasicDb<Customer>.GetAll()
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void GetCustomerByUsername()
+        IList<Customer> IBasicDb<Customer>.GetCustomerByUsername()
         {
             try
             {
@@ -125,7 +125,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Remove()
+       Customer IBasicDb<Customer>.Remove(Customer t)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        public void Update()
+       Customer IBasicDb<Customer>.Update(Customer t)
         {
             try
             {
