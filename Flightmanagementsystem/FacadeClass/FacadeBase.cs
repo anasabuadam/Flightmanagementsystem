@@ -20,11 +20,11 @@ namespace Flightmanagementsystem
           
             _airlineDAO = new AirlineCompany();
             _countryDAO = new Country();
-            _customerDAO = customerDAO;
-            _adminDAO = adminDAO;
-            _user = user;
-            _flightDAO = flightDAO;
-            _ticketDAO = ticketDAO;
+            _customerDAO =Customer;
+            _adminDAO = Administrator;
+            _user = User;
+            _flightDAO = Flight;
+            _ticketDAO = Ticket;
         }
         public override string ToString()
         {
