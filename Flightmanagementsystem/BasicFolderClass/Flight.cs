@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class Flight :  IPoco
+    public class Flight :  IPoco
     {
         AirlineCompany AirlineCompany = new AirlineCompany();
 

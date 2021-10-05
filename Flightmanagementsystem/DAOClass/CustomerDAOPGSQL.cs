@@ -9,7 +9,8 @@ namespace Flightmanagementsystem
   public  class CustomerDAOPGSQL : ICustomerDAO
     {
         string conn_string = "";
-        Customer IBasicDb<Customer>.Add(User t)
+
+        public void Add(Customer t)
         {
             try
             {
@@ -38,7 +39,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        Customer IBasicDb<Customer>.Get()
+        public Customer Get(int id)
         {
             try
             {
@@ -65,6 +66,7 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return Get(id);
         }
 
        IList<Customer> IBasicDb<Customer>.GetAll()
@@ -94,9 +96,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return null;
         }
 
-        IList<Customer> IBasicDb<Customer>.GetCustomerByUsername()
+        public CustomerDAOPGSQL GetCustomerByUsername()
         {
             try
             {
@@ -123,9 +126,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return GetCustomerByUsername();
         }
 
-       Customer IBasicDb<Customer>.Remove(Customer t)
+        public void Remove(Customer t)
         {
             try
             {
@@ -154,7 +158,7 @@ namespace Flightmanagementsystem
             }
         }
 
-       Customer IBasicDb<Customer>.Update(Customer t)
+        public void Update(Customer t)
         {
             try
             {

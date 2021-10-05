@@ -7,14 +7,13 @@ using Npgsql;
 
 namespace Flightmanagementsystem
 {
- public   interface IBasicDb<T>
+ public interface IBasicDb<T>
     {
-        public void Add();
-
-        public void Get();
-        public void GetAll();
-        public void Remove();
-        public void Update();
+        public void Add(T t);
+        public T Get(int id);
+        public IList<T> GetAll();
+        public void Remove(T t);
+        public void Update(T t);
 
     }
 }

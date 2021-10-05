@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class AirlineCompany : IPoco , IUser
+    public class AirlineCompany : IPoco , IUser
     {
         User User = new User();
 

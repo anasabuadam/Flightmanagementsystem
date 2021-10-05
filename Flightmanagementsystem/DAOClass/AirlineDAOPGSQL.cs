@@ -10,7 +10,8 @@ namespace Flightmanagementsystem
 
     {
         string conn_string = "";
-         AirlineCompany IBasicDb<AirlineCompany>.Add(AirlineCompany t)
+
+        public AirlineCompany Add(AirlineCompany t)
         {
             try
             {
@@ -37,9 +38,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return Add(new AirlineCompany());
         }
 
-        AirlineCompany IBasicDb<AirlineCompany>.Get()
+        public AirlineCompany Get(int id)
         {
             try
             {
@@ -66,9 +68,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return Get(id);
         }
 
-                IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAirlineByUsername()
+        public void GetAirlineByUsername()
         {
             try
             {
@@ -95,9 +98,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+          
         }
 
-         IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAll()
+        void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
         {
             try
             {
@@ -126,7 +130,7 @@ namespace Flightmanagementsystem
             }
         }
 
-       IList<AirlineCompany> IBasicDb<AirlineCompany>.GetAllAirlineByCountry()
+        public void GetAllAirlineByCountry()
         {
             try
             {
@@ -155,7 +159,7 @@ namespace Flightmanagementsystem
             }
         }
 
-       AirlineCompany IBasicDb<AirlineCompany>.Remove(AirlineCompany t)
+        public void Remove(AirlineCompany t)
         {
             try
             {
@@ -184,7 +188,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        AirlineCompany IBasicDb<AirlineCompany>.Update(AirlineCompany t)
+        public void Update(AirlineCompany t)
         {
             try
             {
@@ -211,6 +215,36 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+        }
+
+        public IList<AirlineCompany> GetAll()
+        {
+            try
+            {
+
+
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+
+                        cmd.CommandText = "GetAirline";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
+
+                        sqlConnection1.Open();
+
+                        cmd.ExecuteNonQuery();
+                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
+            }
+            return GetAll();
         }
     }
 }

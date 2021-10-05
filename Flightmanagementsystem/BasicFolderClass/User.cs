@@ -35,6 +35,12 @@ namespace Flightmanagementsystem
             return obj is User user &&
                    Id == user.Id;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Username, Password, Email, User_Role);
+        }
+
         public static bool operator !=(User user, User user1)
         {
             return !(user == user1);
@@ -43,6 +49,7 @@ namespace Flightmanagementsystem
         {
             return user == user1;
         }
+
         
     }
 }

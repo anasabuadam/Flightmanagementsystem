@@ -6,14 +6,28 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class FlightDAOPGSQL : IFlightDAO
+    public class FlightDAOPGSQL : IFlightDAO
     {
         string conn_string = "";
-         Flight IBasicDb<Flight>.Add()(Flight t)
+         
+        
+        public FlightDAOPGSQL GetAllFlightsVacancy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FlightDAOPGSQL GetFlightById()
+        {
+            throw new NotImplementedException();
+        }
+        public FlightDAOPGSQL GetFlightByCustomer()
+        {
+            throw new NotImplementedException();
+        }
+        public void Add(Flight t)
         {
             try
             {
-         
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -37,8 +51,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        Flight IBasicDb<Flight>.Get()
-      
+        public Flight Get(int id)
         {
             try
             {
@@ -65,26 +78,85 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return null;
         }
+
+        public void GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
 
       
 
-        IList<Flight> IBasicDb<Flight>.GetAllFlightsVacancy()
+      
+
+       
+
+        IList<Flight> IBasicDb<Flight>.GetAll()
         {
             throw new NotImplementedException();
         }
 
-       IList<Flight> IBasicDb<Flight>.GetFlightByCustomer()
-        {
-            throw new NotImplementedException();
-        }
-
-       IList<Flight> IBasicDb<Flight>.GetFlightByDepartureDate() 
+        public void Remove(Flight t)
         {
             try
             {
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
 
+                        cmd.CommandText = "RemoveFlight";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
 
+                        sqlConnection1.Open();
+
+                        cmd.ExecuteNonQuery();
+                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
+            }
+        }
+
+        public void Update(Flight t)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+
+                        cmd.CommandText = "UpdateFlight";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = sqlConnection1;
+
+                        sqlConnection1.Open();
+
+                        cmd.ExecuteNonQuery();
+                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to run sp from db {ex}");
+            }
+        }
+
+        public FlightDAOPGSQL GetFlightByDepartureDate()
+        {
+
+            try
+            {
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -106,13 +178,13 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return GetFlightByDepartureDate();
         }
 
-        IList<Flight> IBasicDb<Flight>.GetFlightByDestinationCountry()
+        public FlightDAOPGSQL GetFlightByDestinationCountry()
         {
             try
             {
-
 
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
@@ -132,46 +204,17 @@ namespace Flightmanagementsystem
                 }
             }
             catch (Exception ex)
-            {
+            { 
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return GetFlightByDestinationCountry();
+                
         }
 
-        Flight IBasicDb<Flight>.Get(int id)
+        public FlightDAOPGSQL GetFlightByLandingDate()
         {
             try
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "GetFlightById";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-        }
-
-       Flight IBasicDb<Flight>.GetFlightByLandingDate()
-        {
-            try
-            {
-
-
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -193,9 +236,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return GetFlightByDepartureDate();
         }
 
-       Flight IBasicDb<Flight>.GetFlightByOriginCountry()
+        public FlightDAOPGSQL GetFlightByOriginCountry()
         {
             try
             {
@@ -222,64 +266,7 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
-        }
-
-        Flight IBasicDb<Flight>.Remove(Flight t)
-        {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "RemoveFlight";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-        }
-
-       Flight IBasicDb<Flight>.Update(Flight t)
-        {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "UpdateFlight";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+            return GetFlightByOriginCountry();
         }
     }
 }

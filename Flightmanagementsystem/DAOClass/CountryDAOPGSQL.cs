@@ -6,14 +6,13 @@ using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    internal class CountryDAOPGSQL : ICountryDAO
+    public class CountryDAOPGSQL : ICountryDAO
     {
         string conn_string = "";
-        Country IBasicDb<Country>.Add(Country t)
+        public void Add(Country t)
         {
             try
             {
-
 
                 using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
                 {
@@ -37,7 +36,8 @@ namespace Flightmanagementsystem
                 Console.WriteLine($"Failed to run sp from db {ex}" );
             }
         }
-       Country IBasicDb<Country>.Get()
+
+        public Country Get(int id)
         {
             try
             {
@@ -54,17 +54,22 @@ namespace Flightmanagementsystem
 
                         cmd.ExecuteNonQuery();
 
+                        // read country from database row
+                        
                     }
+                    
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+
+            return Get(id);
         }
 
 
-        IList<Country> IBasicDb<Country>.GetAll()
+        public IList<Country> GetAll()
         {
             try
             {
@@ -81,6 +86,8 @@ namespace Flightmanagementsystem
 
                         cmd.ExecuteNonQuery();
 
+                       
+
                     }
                 }
             }
@@ -88,10 +95,11 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+
+            return GetAll();
         }
 
-
-        Country IBasicDb<Country>.Remove(Country t)
+        public void Remove(Country t)
         {
             try
             {
@@ -117,7 +125,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        Country IBasicDb<Country>.Update(Country t)
+        public void Update(Country t)
         {
             try
             {

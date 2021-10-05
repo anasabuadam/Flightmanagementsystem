@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Flightmanagementsystem.FacadeClass
 {
-   internal class AnonymousUserFacade : IAnonymoussUserFacade 
+   public class AnonymousUserFacade : IAnonymoussUserFacade 
     {
         
         string conn_string { get; }

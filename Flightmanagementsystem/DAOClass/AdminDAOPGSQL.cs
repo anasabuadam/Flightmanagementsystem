@@ -9,7 +9,7 @@ namespace Flightmanagementsystem
     class AdminDAOPGSQL : IAdminDAO
     {
         string conn_string = "";
-         Administrator IBasicDb<Administrator>.Add(Administrator t)
+        void IBasicDb<Administrator>.Add(Administrator t)
         {
 
             try
@@ -37,9 +37,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return ;
         }
 
-       Administrator IBasicDb<Administrator>.Get()
+        public Administrator Get(int id)
         {
             try
             {
@@ -66,9 +67,12 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return Get(id);
         }
 
-         IList<Administrator> IBasicDb<Administrator>.GetAll()
+
+
+        public IList<Administrator> GetAll()
         {
             try
             {
@@ -95,9 +99,12 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return GetAll();
         }
 
-       Administrator IBasicDb<Administrator>.Remove(Administrator t)
+
+
+        public void Remove(Administrator t)
         {
             try
             {
@@ -126,7 +133,9 @@ namespace Flightmanagementsystem
             }
         }
 
-        Administrator IBasicDb<Administrator>.Update(Administrator t)
+
+
+        public void Update(Administrator t)
         {
             try
             {
@@ -154,5 +163,8 @@ namespace Flightmanagementsystem
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
         }
+
+      
+
     }
 }

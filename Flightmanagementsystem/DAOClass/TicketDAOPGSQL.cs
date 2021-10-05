@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Flightmanagementsystem
 {
-    class TicketDAOPGSQL : ITicketDAO
+    public class TicketDAOPGSQL : ITicketDAO
     {
         string conn_string = "";
-      Ticket IBasicDb<Ticket>.Add(Ticket t)
+        public void Add(Ticket t)
         {
             try
             {
@@ -65,6 +65,7 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return null;
         }
 
         IList<Ticket> IBasicDb<Ticket>.GetAll()
@@ -94,9 +95,10 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
+            return null;
         }
 
-       Ticket IBasicDb<Ticket>.Remove(Ticket t)
+        public void Remove(Ticket t)
         {
             try
             {
@@ -125,7 +127,7 @@ namespace Flightmanagementsystem
             }
         }
 
-        Ticket IBasicDb<Ticket>.Update(Ticket t)
+        public void Update(Ticket t)
         {
             try
             {
