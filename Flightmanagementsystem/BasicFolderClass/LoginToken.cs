@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flightmanagementsystem.BasicFolderClass
+﻿namespace Flightmanagementsystem.BasicFolderClass
 {
     public class LoginToken<T> : ILoginToken where T : IUser
     {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-   public  class User : IPoco
+    public class User : IPoco, IUser
     {
         public Int64 Id { get; set; }
         public string Username { get; set; }
@@ -14,7 +12,7 @@ namespace Flightmanagementsystem
 
         public User()
         {
-            
+
         }
 
         public User(long id, string username, string password, string email, int user_Role)
@@ -50,6 +48,6 @@ namespace Flightmanagementsystem
             return user == user1;
         }
 
-        
+
     }
 }

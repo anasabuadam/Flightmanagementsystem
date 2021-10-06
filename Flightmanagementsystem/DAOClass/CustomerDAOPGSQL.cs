@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-  public  class CustomerDAOPGSQL : ICustomerDAO
+    public class CustomerDAOPGSQL : Customer, ICustomerDAO
     {
         string conn_string = "";
 
@@ -69,7 +68,7 @@ namespace Flightmanagementsystem
             return Get(id);
         }
 
-       IList<Customer> IBasicDb<Customer>.GetAll()
+        IList<Customer> IBasicDb<Customer>.GetAll()
         {
             try
             {

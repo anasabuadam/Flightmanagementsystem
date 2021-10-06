@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
     class LoginService : ILoginService
     {
@@ -10,7 +6,7 @@ namespace Flightmanagementsystem
         {
 
         }
-        
+
         public void TryLogin()
         {
             TryLogin();

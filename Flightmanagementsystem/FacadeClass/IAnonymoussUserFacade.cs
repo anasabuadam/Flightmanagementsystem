@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-   internal interface IAnonymoussUserFacade
+    internal interface IAnonymoussUserFacade
     {
-     
+
 
         string conn_string { get; }
 
-       public  IList<Flight> GetFlights(int id)
+        public IList<Flight> GetFlights(int id)
         {
             Flight res = null;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
@@ -39,7 +38,7 @@ namespace Flightmanagementsystem
                 return (IList<Flight>)res;
             }
         }
-     
+
         public IList<AirlineCompany> AllAirlineCompanies(int id)
         {
             AirlineCompany res = null;
@@ -78,7 +77,7 @@ namespace Flightmanagementsystem
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = $"select * from Flights Where id = {id}  ";
                     SqlDataReader reader = cmd.ExecuteReader();
-                    if(reader.Read())
+                    if (reader.Read())
                     {
                         res = new Flight
                         {
@@ -96,8 +95,8 @@ namespace Flightmanagementsystem
             }
         }
 
-      
-        public IList<Flight> GetFlightsByOriginCountry(int countryCode )
+
+        public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
             Flight res = null;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
@@ -125,10 +124,10 @@ namespace Flightmanagementsystem
                 return (IList<Flight>)res;
             }
         }
-    
-       public  IList<Flight> GetFlightsByDestinationCountry(int countryCode)
+
+        public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
-            Flight res = null ;
+            Flight res = null;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
             {
 
@@ -157,7 +156,7 @@ namespace Flightmanagementsystem
             return (IList<Flight>)res;
         }
 
-  
+
         public IList<Flight> GetFlightsByDepatureDate(DateTime departureDate)
         {
             Flight res = null;
@@ -188,8 +187,8 @@ namespace Flightmanagementsystem
             }
             return (IList<Flight>)res;
         }
-      
-        public IList<Flight> GetFlightsByLandingDate(DateTime landingDate )
+
+        public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
             Flight res = null;
             using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))

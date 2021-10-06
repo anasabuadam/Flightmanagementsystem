@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
-  public  interface ICustomerDAO : IBasicDb<Customer>
+    public interface ICustomerDAO : IBasicDb<Customer>
     {
-      public  CustomerDAOPGSQL GetCustomerByUsername();
+        public CustomerDAOPGSQL GetCustomerByUsername();
 
     }
 }

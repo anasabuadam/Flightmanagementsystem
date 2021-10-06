@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -31,9 +30,9 @@ namespace Flightmanagementsystem
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine($"Failed to run sp from db {ex}" );
+                Console.WriteLine($"Failed to run sp from db {ex}");
             }
         }
 
@@ -55,9 +54,9 @@ namespace Flightmanagementsystem
                         cmd.ExecuteNonQuery();
 
                         // read country from database row
-                        
+
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -86,7 +85,7 @@ namespace Flightmanagementsystem
 
                         cmd.ExecuteNonQuery();
 
-                       
+
 
                     }
                 }

@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
     public class FlightDAOPGSQL : IFlightDAO
     {
         string conn_string = "";
-         
-        
+
+
         public FlightDAOPGSQL GetAllFlightsVacancy()
         {
             throw new NotImplementedException();
@@ -87,11 +86,11 @@ namespace Flightmanagementsystem
         }
 
 
-      
 
-      
 
-       
+
+
+
 
         IList<Flight> IBasicDb<Flight>.GetAll()
         {
@@ -204,11 +203,11 @@ namespace Flightmanagementsystem
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
             return GetFlightByDestinationCountry();
-                
+
         }
 
         public FlightDAOPGSQL GetFlightByLandingDate()

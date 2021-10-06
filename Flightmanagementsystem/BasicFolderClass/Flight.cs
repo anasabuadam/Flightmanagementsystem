@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-    public class Flight :  IPoco
+    public class Flight : IPoco
     {
         AirlineCompany AirlineCompany = new AirlineCompany();
 
-        public Int64 Id { get; set; }
-        public Int64 Airline_Company_Id { get; set; }
-        public Int32 Origin_Country_Id { get; set; }
-        public Int32 Destination_Country_Id { get; set; }
+        public long Id { get; set; }
+        public long Airline_Company_Id { get; set; }
+        public int Origin_Country_Id { get; set; }
+        public int Destination_Country_Id { get; set; }
         public DateTime Departure_Time { get; set; }
         public DateTime Landing_Time { get; set; }
 
-        public Int32 Remaining_Tickets { get; set; }
+        public int Remaining_Tickets { get; set; }
 
         public Flight()
         {

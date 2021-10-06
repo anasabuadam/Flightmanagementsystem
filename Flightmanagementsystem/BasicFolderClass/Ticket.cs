@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-   public class Ticket : IPoco
+    public class Ticket : IPoco
     {
         Flight Flight = new Flight();
         Customer Customer = new Customer();
@@ -38,7 +36,7 @@ namespace Flightmanagementsystem
         {
             return HashCode.Combine(Id);
         }
-        public static bool operator !=(Ticket ticket, Ticket  ticket1)
+        public static bool operator !=(Ticket ticket, Ticket ticket1)
         {
             return !(ticket == ticket1);
         }

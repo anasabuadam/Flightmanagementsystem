@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WebGrease.Configuration;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
-  public abstract class FacadeBase 
+    public abstract class FacadeBase
     {
         protected IAirlineDAO _airlineDAO;
         protected ICountryDAO _countryDAO;
@@ -17,14 +12,14 @@ namespace Flightmanagementsystem
         public bool? TreatWarningsAsErrors { get; }
         protected FacadeBase(bool test)
         {
-          
-            _airlineDAO = new AirlineCompany();
-            _countryDAO = new Country();
-            _customerDAO =Customer;
-            _adminDAO = Administrator;
-            _user = User;
-            _flightDAO = Flight;
-            _ticketDAO = Ticket;
+
+            _airlineDAO = new AirlineDAOPGSQL();
+            _countryDAO = new CountryDAOPGSQL();
+            _customerDAO = new CustomerDAOPGSQL();
+            _adminDAO = new AdminDAOPGSQL();
+            _user = new User();
+            _flightDAO = new FlightDAOPGSQL();
+            _ticketDAO = new TicketDAOPGSQL();
         }
         public override string ToString()
         {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
-    public class UserRoles: IUser
+    public class UserRoles : IUser
     {
         public Int32 Id { get; set; }
         public string Role_Name { get; set; }
@@ -33,7 +31,7 @@ namespace Flightmanagementsystem
         {
             return HashCode.Combine(Id);
         }
-        public static bool operator !=(UserRoles  userRoles, UserRoles  userRoles1)
+        public static bool operator !=(UserRoles userRoles, UserRoles userRoles1)
         {
             return !(userRoles == userRoles1);
         }

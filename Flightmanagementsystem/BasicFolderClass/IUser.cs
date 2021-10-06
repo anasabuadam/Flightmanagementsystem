@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
-  public  interface IUser
+    public interface IUser
     {
 
     }

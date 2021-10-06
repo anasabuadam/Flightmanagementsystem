@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
     public class Class1
     {
-//test
+        //test
     }
 }

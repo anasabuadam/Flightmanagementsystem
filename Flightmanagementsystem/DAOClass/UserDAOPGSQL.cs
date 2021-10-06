@@ -8,7 +8,7 @@ namespace Flightmanagementsystem.DAOClass
     public class UserDAOPGSQL : IUser
     {
         string conn_string = "";
-      public  User Add(User t)
+        public User Add(User t)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Flightmanagementsystem.DAOClass
             return null;
         }
 
-      public  User Get(int Id)
+        public User Get(int Id)
         {
 
 
@@ -67,11 +67,11 @@ namespace Flightmanagementsystem.DAOClass
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
-            return null ;
+            return null;
 
         }
 
-       public IList<User > GetAll()
+        public IList<User> GetAll()
         {
             try
             {
@@ -130,7 +130,7 @@ namespace Flightmanagementsystem.DAOClass
             }
         }
 
-       public void Update(User t)
+        public void Update(User t)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace Flightmanagementsystem.DAOClass
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
-        
+
         }
     }
 }

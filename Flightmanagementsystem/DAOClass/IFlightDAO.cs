@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem
 {
-   public interface IFlightDAO : IBasicDb<Flight>
+    public interface IFlightDAO : IBasicDb<Flight>
     {
         FlightDAOPGSQL GetAllFlightsVacancy();
         FlightDAOPGSQL GetFlightById();

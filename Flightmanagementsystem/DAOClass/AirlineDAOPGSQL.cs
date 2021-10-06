@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Flightmanagementsystem
 {
@@ -98,7 +97,7 @@ namespace Flightmanagementsystem
             {
                 Console.WriteLine($"Failed to run sp from db {ex}");
             }
-          
+
         }
 
         void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
