@@ -2,47 +2,70 @@
 
 namespace Flightmanagementsystem
 {
-    public class Ticket : IPoco
+
+    public class Ticket : IPoco, IUser
     {
-        Flight Flight = new Flight();
-        Customer Customer = new Customer();
+        public int _id;
+        private int _flightId;
+        private int _customerId;
 
-        public Int64 Id { get; set; }
-        public Int64 Flight_Id { get; set; }
-        public Int32 Customer_Id { get; set; }
-
-        public Ticket()
+        public int Id
         {
+
+            get { return _id; }
+            set { _id = value; }
+
+        }
+        public int FlightId
+        {
+
+            get { return _flightId; }
+            set { _flightId = value; }
+
+        }
+        public int CustomerId
+        {
+
+            get { return _customerId; }
+            set { _customerId = value; }
+
         }
 
-        public Ticket(long id, long flight_Id, int customer_Id)
+
+        public Ticket() { }
+
+        public Ticket(int flightId, int customerId)
         {
-            Id = id;
-            Flight_Id = flight_Id;
-            Customer_Id = customer_Id;
+            _flightId = flightId;
+            _customerId = customerId;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is Ticket ticket &&
-                   Id == ticket.Id;
-        }
-        public override string ToString()
-        {
-            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+            return obj is Ticket t &&
+                   Id == t.Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
+            return +Id.GetHashCode();
         }
-        public static bool operator !=(Ticket ticket, Ticket ticket1)
+
+        public override string ToString()
         {
-            return !(ticket == ticket1);
+            return ($"Ticket {Id} ,{FlightId}, {CustomerId}");
         }
-        public static bool operator ==(Ticket ticket, Ticket ticket1)
+
+
+
+        public static bool operator ==(Ticket t1, Ticket t2)
         {
-            return ticket == ticket1;
+            return (t1.Id == t2.Id);
         }
+        public static bool operator !=(Ticket t1, Ticket t2)
+        {
+            return !(t1 == t2);
+        }
+
     }
 }

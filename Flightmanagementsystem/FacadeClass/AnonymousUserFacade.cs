@@ -1,221 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-
+using System.Text.Unicode;
 namespace Flightmanagementsystem.FacadeClass
 {
-    public class AnonymousUserFacade
+
+
+    public class AnonymousUserFacade : FacadeBase, IAnonymousUserFacade
     {
-
-        string conn_string { get; }
-
-        private string conString = "Database=FlightManagementSystem;Trusted_Connection=True;";
-        public IList<Flight> GetFlights()
+        //IList<AirlineCompany> IAnonymousUserFacade.GetAllAirlineCompanies()
+        public IList<AirlineCompany> GetAllAirlineCompanies()
         {
-            IList<Flight> flights = new List<Flight>();
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-
-                    Flight flight = new Flight
-                    {
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-                    flights.Add(flight);
-                }
-                return flights;
-            }
+            AirlineDAOMSSQL _airlineDAO1 = (AirlineDAOMSSQL)_airlineDAO;
+            return _airlineDAO1.GetAll();
         }
 
-        public IList<AirlineCompany> AllAirlineCompanies()
+        //IList<Flight> IAnonymousUserFacade.GetAllFlights()
+        public IList<Flight> GetAllFlights()
         {
-            IList<AirlineCompany> airlines = new List<AirlineCompany>();
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Airline_Companies";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    AirlineCompany airline = new AirlineCompany
-                    {
-                        Id = (long)reader["id"],
-                        User_Id = (long)reader["User_Id"],
-                        Name = (string)reader["Name"],
-                        Country_Id = (int)reader["CountryId"]
-                    };
-                    airlines.Add(airline);
-                }
-            }
-            return airlines;
+
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetAll();
         }
 
-        public Flight GetFlihgtById(int id)
+        //IList<Flight> IAnonymousUserFacade.GetAllFlightsByAirLineCompanies(AirlineCompany comp)
+        public IList<Flight> GetAllFlightsByAirLineCompanies(AirlineCompany comp)
         {
-            Flight flights1 = new Flight();
 
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights Where id = {id}";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Flight flight = new Flight
-                    {
-
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-
-                    return flight;
-                }
-            }
-            return flights1;
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetFlightsByAirlineCompany(comp);
         }
 
-        public IList<Flight> GetFlightsByOriginCountry(int countryCode)
+        //Dictionary<Flight, int> IAnonymousUserFacade.GetAllFlightsVacancy()
+        public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
-            IList<Flight> flights = new List<Flight>();
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights Where Origin_Country_Id = {countryCode}";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Flight flight = new Flight
-                    {
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-                    flights.Add(flight);
-                }
-            }
-            return flights;
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetAllFlightsVacancy();
         }
 
+        //Flight IAnonymousUserFacade.GetFlightById(int id)
+        public Flight GetFlightById(int id)
+        {
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.Get(id);
+        }
 
+        // IList<Flight> IAnonymousUserFacade.GetFlightsByDepartureDate(DateTime departureDate)
+        public IList<Flight> GetFlightsByDepartureDate(string departureDate)
+        {
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetFlightsByDepartureTime(departureDate);
+
+        }
+
+        //IList<Flight> IAnonymousUserFacade.GetFlightsByDestinationCountry(int countryCode)
         public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
-            IList<Flight> flights = new List<Flight>();
-
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights Where Destination_Country_Id = {countryCode}";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Flight flight = new Flight
-                    {
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-                    flights.Add(flight);
-                }
-            }
-            return flights;
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetFlightsByDestinationCountry(countryCode);
         }
 
-        public IList<Flight> GetFlightsByDepatureDate(DateTime departureDate)
+        // IList<Flight> IAnonymousUserFacade.GetFlightsByLandingDate(DateTime landingDate)
+        public IList<Flight> GetFlightsByLandingDate(string landingDate)
         {
-            IList<Flight> flights = new List<Flight>();
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights Where Departure_Time = {departureDate}";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Flight flight = new Flight
-                    {
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-                    flights.Add(flight);
-                }
-            }
-            return flights;
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetFlightsByLandingTime(landingDate);
         }
 
-        public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
+        //IList<Flight> IAnonymousUserFacade.GetFlightsByOriginCountry(int countryCode)
+        public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
-            IList<Flight> flights = new List<Flight>();
-            using (SqlConnection sqlConnection1 = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection1;
-                cmd.Connection.Open();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = $"select * from Flights Where Landing_Time = {landingDate}";
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    Flight flight = new Flight
-                    {
-                        Id = (long)reader["id"],
-                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
-                        Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        Destination_Country_Id = (int)reader["Destination_Country_Id"],
-                        Departure_Time = (DateTime)reader["Departure_Time"],
-                        Landing_Time = (DateTime)reader["Landing_Time"],
-                        Remaining_Tickets = (int)reader["Remaining_Tickets"]
-                    };
-                    flights.Add(flight);
-                }
-            }
-            return flights;
+            FlightDAOPGSQL _flightDAO1 = (FlightDAOPGSQL)_flightDAO;
+            return _flightDAO1.GetFlightsByOriginCountry(countryCode);
         }
-
     }
 }
 

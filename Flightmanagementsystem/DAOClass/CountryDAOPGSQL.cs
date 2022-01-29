@@ -1,154 +1,171 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using Flightmanagementsystem.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    public class CountryDAOPGSQL : ICountryDAO
+
+    public class CountryDAOMSSQL : ICountryDAO
     {
-        string conn_string = "";
-        public void Add(Country t)
+        static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
+        void IBasicDb<Country>.Add(Country t)
         {
-            try
+            int result = 0;
+            string countryName = t.CountryName;
+            string cmdStr = $"SELECT * FROM Countries WHERE COUNTRY_NAME = '{countryName}'";
+            SQLConnection.SQLOpen(conSQL);
+            int countryId = 0;
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "AddCountre";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
+                        reader.Read();
+                        countryId = (int)reader["ID"];
+                        SQLConnection.SQLClose(conSQL);
+                        throw new CountryAlreadyExistsException($"The country {countryName} already exists with ID {countryId}");
                     }
                 }
             }
-            catch (Exception ex)
+            if (countryId == 0)
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                cmdStr = $"INSERT INTO Countries VALUES('{countryName}');SELECT SCOPE_IDENTITY();";
+                using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+                {
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+
             }
+            SQLConnection.SQLClose(conSQL);
+            
         }
 
-        public Country Get(int id)
+        public Country Get(long id)
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            Country country = null;
+            string cmdStr = $"SELECT * FROM Countries WHERE ID = {id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "GetAllCountries";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-
-                        // read country from database row
-
+                        reader.Read();
+                        country = new Country
+                        {
+                            Id = (int)reader["ID"],
+                            CountryName = (string)reader["COUNTRY_NAME"],
+                        };
                     }
-
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-
-            return Get(id);
+            SQLConnection.SQLClose(conSQL);
+            return country;
         }
 
 
-        public IList<Country> GetAll()
+        IList<Country> IBasicDb<Country>.GetAll()
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            List<Country> countries = new List<Country>();
+            string cmdStr = $"SELECT * FROM Countrie";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    Country country = null;
+                    while (reader.Read())
                     {
-
-                        cmd.CommandText = "GetAllCountries";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-
-
-
+                        country = new Country
+                        {
+                            Id = (int)reader["ID"],
+                            CountryName = (string)reader["COUNTRY_NAME"],
+                        };
+                        countries.Add(country);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-
-            return GetAll();
+            SQLConnection.SQLClose(conSQL);
+            return countries;
         }
 
         public void Remove(Country t)
         {
-            try
+            Country country = Get(t.Id);
+            if (country is null)
             {
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "RemoveCuntre";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-
-                    }
-                }
+                throw new CountryNotFoundException($"The country  with id {t.Id} does not exist");
             }
-            catch (Exception ex)
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Countries WHERE ID = {t.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                cmd.ExecuteNonQuery();
             }
+            SQLConnection.SQLClose(conSQL);
         }
 
         public void Update(Country t)
         {
-            try
+            Country country = Get(t.Id);
+            if (country is null)
             {
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                throw new CountryNotFoundException($"The country  with id {t.Id}  does not exist");
+            }
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"UPDATE Countries SET COUNTRY_NAME = '{t.CountryName}' WHERE ID = {t.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+        public Country GetCountryByName(string name)
+        {
+            SQLConnection.SQLOpen(conSQL);
+            Country c = null;
+            string cmdStr = $"SELECT * FROM Countries WHERE COUNTRY_NAME = '{name}'";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "UpdateCuntre";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
+                        reader.Read();
+                        c = new Country
+                        {
+                            Id = (int)reader["ID"],
+                            CountryName = (string)reader["COUNTRY_NAME"],
+                        };
 
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+
+            SQLConnection.SQLClose(conSQL);
+            return c;
         }
+        public void DeleteAll()
+        {
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Countries ";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+
+
+
+     
+
+
 
     }
 }

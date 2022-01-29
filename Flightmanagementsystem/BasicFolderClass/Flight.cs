@@ -1,57 +1,121 @@
-﻿using System;
+﻿using Flightmanagementsystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Flightmanagementsystem
 {
-    public class Flight : IPoco
+    public class Flight : IPoco, IUser
+
+
     {
-        AirlineCompany AirlineCompany = new AirlineCompany();
-
-        public long Id { get; set; }
-        public long Airline_Company_Id { get; set; }
-        public int Origin_Country_Id { get; set; }
-        public int Destination_Country_Id { get; set; }
-        public DateTime Departure_Time { get; set; }
-        public DateTime Landing_Time { get; set; }
-
-        public int Remaining_Tickets { get; set; }
-
-        public Flight()
+        private int _id;
+        private int _airlineCompanyId;
+        private int _originCountryCode;
+        private int _destinationCountryCode;
+        private string _departureTime;
+        private string _landingTime;
+        private int _remainingTickets;
+        private int _flightStatus;
+        public int Id
         {
+
+            get { return _id; }
+            set { _id = value; }
+
+        }
+        public int AirlineCompanyId
+        {
+
+            get { return _airlineCompanyId; }
+            set { _airlineCompanyId = value; }
+
+        }
+        public int OriginCountryCode
+        {
+
+            get { return _originCountryCode; }
+            set { _originCountryCode = value; }
+
+        }
+        public int DestinationCountryCode
+        {
+
+            get { return _destinationCountryCode; }
+            set { _destinationCountryCode = value; }
+
+        }
+        public string DepartureTime
+        {
+
+            get { return _departureTime; }
+            set { _departureTime = value; }
+
+        }
+        public string LandingTime
+        {
+
+            get { return _landingTime; }
+            set { _landingTime = value; }
+
+        }
+        public int RemainingTickets
+        {
+
+            get { return _remainingTickets; }
+            set { _remainingTickets = value; }
+
+        }
+        public int FlightStatus
+        {
+
+            get { return _flightStatus; }
+            set { _flightStatus = value; }
+
+        }
+        public Flight(int airlineCompanyId, int originCountryCode, int destinationCountryCode, string departureTime, string landingTime, int remainingTickets, int flightStatus)
+        {
+            _airlineCompanyId = airlineCompanyId;
+            _originCountryCode = originCountryCode;
+            _destinationCountryCode = destinationCountryCode;
+            _departureTime = departureTime;
+            _landingTime = landingTime;
+            _remainingTickets = remainingTickets;
+            _flightStatus = flightStatus;
         }
 
-        public Flight(long id, long airline_Company_Id, int origin_Country_Id, int destination_Country_Id, DateTime departure_Time, DateTime landing_Time, int remaining_Tickets)
-        {
-            Id = id;
-            Airline_Company_Id = airline_Company_Id;
-            Origin_Country_Id = origin_Country_Id;
-            Destination_Country_Id = destination_Country_Id;
-            Departure_Time = departure_Time;
-            Landing_Time = landing_Time;
-            Remaining_Tickets = remaining_Tickets;
-        }
-        public override string ToString()
-        {
-            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
-        }
+
+        public Flight() { }
+
+
 
         public override bool Equals(object obj)
         {
-            return obj is Flight flight &&
-                   Id == flight.Id;
+            return obj is Flight f &&
+                   Id == f.Id;
+        }
+
+
+
+        public override string ToString()
+        {
+            return ($"Flight {Id} ,{AirlineCompanyId}, {OriginCountryCode}, {DestinationCountryCode}, {DepartureTime}, {LandingTime}, {RemainingTickets}, {FlightStatus}");
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
-        }
-        public static bool operator !=(Flight flight, Flight flight1)
-        {
-            return !(flight == flight1);
-        }
-        public static bool operator ==(Flight flight, Flight flight1)
-        {
-            return flight == flight1;
+            return  + Id.GetHashCode();
         }
 
+        public static bool operator ==(Flight f1, Flight f2)
+        {
+            return (f1.Id == f2.Id);
+        }
+        public static bool operator !=(Flight f1, Flight f2)
+        {
+            return !(f1 == f2);
+        }
     }
 }

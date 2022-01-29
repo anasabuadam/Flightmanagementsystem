@@ -5,165 +5,32 @@ using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    class AdminDAOPGSQL : IAdminDAO
+    public class AdminDAOPGSQL : IAdminDAO
     {
-        string conn_string = "";
-        void IBasicDb<Administrator>.Add(Administrator t)
+
+        public void Add(Administrator t)
         {
-
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "AddAdmin";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return;
+            throw new NotImplementedException();
         }
 
-        public Administrator Get(int id)
+        public Administrator Get(long id)
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "GetAdmin";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return Get(id);
+            throw new NotImplementedException();
         }
-
-
 
         public IList<Administrator> GetAll()
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "GetAdmin";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return GetAll();
+            throw new NotImplementedException();
         }
-
-
 
         public void Remove(Administrator t)
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "RemoveAdmin";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+            throw new NotImplementedException();
         }
-
-
 
         public void Update(Administrator t)
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "UpdateAdmin";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+            throw new NotImplementedException();
         }
-
-
-
     }
 }

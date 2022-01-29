@@ -1,189 +1,213 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using Flightmanagementsystem.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    public class CustomerDAOPGSQL : Customer, ICustomerDAO
+    public class  CustomerDAOPGSQL : Customer , ICustomerDAO
     {
-        string conn_string = "";
 
-        public void Add(Customer t)
+
+        static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
+        public int Add(Customer t)
         {
-            try
+
+            int result = 0;
+            string firstName = t.FirstName; 
+            string lastName = t.LastName;
+            string userName = t.UserName;
+            string password = t.Password;
+            string address = t.Address;
+            string phoneNo = t.PhoneNo;
+            string creditCardNumber = t.CreditCardNumber;
+            Customer customer = GetCustomerByUsername("");
+
+            if (customer is null)
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                SQLConnection.SQLOpen(conSQL);
+                string cmdStr = $"INSERT INTO Customers VALUES('{firstName}','{lastName}','{userName}','{password}','{address}','{phoneNo}','{creditCardNumber}');SELECT SCOPE_IDENTITY()";
+                using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "AddCoustomer";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                SQLConnection.SQLClose(conSQL);
             }
-            catch (Exception ex)
+
+            else
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                throw new CustomerAlreadyExistsException($"The country {userName} already exists with ID {customer.Id}");
             }
+
+            return result;
         }
 
         public Customer Get(int id)
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            Customer customer = null;
+            string cmdStr = $"SELECT * FROM Customers WHERE ID = {id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "GetCustomer";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                        reader.Read();
+                        customer = new Customer
+                        {
+                            Id = (int)reader["ID"],
+                            FirstName = (string)reader["FIRST_NAME"],
+                            LastName = (string)reader["LAST_NAME"],
+                            UserName = (string)reader["USER_NAME"],
+                            Password = (string)reader["PASSWORD"],
+                            Address = (string)reader["ADDRESS"],
+                            PhoneNo = (string)reader["PHONE_NO"],
+                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                        };
 
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return Get(id);
+            SQLConnection.SQLClose(conSQL);
+            return customer;
         }
 
-        IList<Customer> IBasicDb<Customer>.GetAll()
+        public List<Customer> GetAll()
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            List<Customer> customers = new List<Customer>();
+            string cmdStr = $"SELECT * FROM Customers";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    while (reader.Read())
                     {
-
-                        cmd.CommandText = "GetCustomer";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
+                        Customer customer = new Customer
+                        {
+                            Id = (int)reader["ID"],
+                            FirstName = (string)reader["FIRST_NAME"],
+                            LastName = (string)reader["LAST_NAME"],
+                            UserName = (string)reader["USER_NAME"],
+                            Password = (string)reader["PASSWORD"],
+                            Address = (string)reader["ADDRESS"],
+                            PhoneNo = (string)reader["PHONE_NO"],
+                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                        };
+                        customers.Add(customer);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return null;
+            SQLConnection.SQLClose(conSQL);
+            return customers;
         }
 
-        public CustomerDAOPGSQL GetCustomerByUsername()
+        public Customer GetCustomerByUsername(string user)
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            Customer c = null; ;
+            string cmdStr = @$"SELECT * FROM Customers WHERE USER_NAME = '{user}'";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "GetCustomerByUsername";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                        reader.Read();
+                        c = new Customer
+                        {
+                            Id = (int)reader["ID"],
+                            FirstName = (string)reader["FIRST_NAME"],
+                            LastName = (string)reader["LAST_NAME"],
+                            UserName = (string)reader["USER_NAME"],
+                            Password = (string)reader["PASSWORD"],
+                            Address = (string)reader["ADDRESS"],
+                            PhoneNo = (string)reader["PHONE_NO"],
+                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"]
+                        };
+                       
 
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return GetCustomerByUsername();
+
+            SQLConnection.SQLClose(conSQL);
+            return c;   
         }
 
         public void Remove(Customer t)
         {
-            try
+            Customer customer = Get(t.Id);
+            if (customer is null)
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "RemoveCustomer";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
+                throw new CustomerNotFoundException($"The customer  with id {t.Id} does not exist");
             }
-            catch (Exception ex)
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Customers WHERE ID = {t.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                cmd.ExecuteNonQuery();
             }
+            SQLConnection.SQLClose(conSQL);
         }
 
         public void Update(Customer t)
         {
-            try
+            Customer customer = Get(t.Id);
+            if (customer is null)
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "UpdateCustomer";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
+                throw new CustomerNotFoundException($"The customer  with id {t.Id} does not exist");
             }
-            catch (Exception ex)
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"UPDATE Customers SET FIRST_NAME = '{t.FirstName}',LAST_NAME = '{t.LastName}'," +
+                $"USER_NAME = '{t.UserName}', PASSWORD = '{t.Password}',Address = '{t.Address}',PHONE_NO = '{t.PhoneNo}'," +
+                $"CREDIT_CARD_NUMBER = '{t.CreditCardNumber}' WHERE ID = {t.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                cmd.ExecuteNonQuery();
             }
+            SQLConnection.SQLClose(conSQL);
         }
+        public void DeleteAll()
+        {
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Customers";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+
+
+
+        void IBasicDb<Customer>.Add(Customer t)
+        {
+            throw new NotImplementedException();
+        }
+
+        Customer IBasicDb<Customer>.Get(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IList<Customer> IBasicDb<Customer>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBasicDb<Customer>.Remove(Customer t)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBasicDb<Customer>.Update(Customer t)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

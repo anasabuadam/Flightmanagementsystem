@@ -1,9 +1,11 @@
-﻿namespace Flightmanagementsystem
+﻿using System.Collections.Generic;
+
+namespace Flightmanagementsystem
 {
     public interface IAirlineDAO : IBasicDb<AirlineCompany>
     {
-        void GetAirlineByUsername();
-        void GetAllAirlineByCountry();
-
+    AirlineCompany GetAirlineByUserName(string name);
+        List<AirlineCompany> GetAllAirlinesCompanyByCountry(int countryId);
     }
+
 }

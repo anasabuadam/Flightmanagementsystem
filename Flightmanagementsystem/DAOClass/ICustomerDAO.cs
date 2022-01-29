@@ -2,7 +2,8 @@
 {
     public interface ICustomerDAO : IBasicDb<Customer>
     {
-        public CustomerDAOPGSQL GetCustomerByUsername();
+        public Customer GetCustomerByUsername(string user);
 
     }
 }
+

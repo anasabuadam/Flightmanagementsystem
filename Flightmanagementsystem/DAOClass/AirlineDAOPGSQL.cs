@@ -1,249 +1,203 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using Flightmanagementsystem.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    class AirlineDAOPGSQL : IAirlineDAO
 
+    public class AirlineDAOMSSQL : IAirlineDAO
     {
-        string conn_string = "";
-
-        public AirlineCompany Add(AirlineCompany t)
+        static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
+     void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
         {
-            try
+        int result = 0;
+        string airlineName = t.AirlineName;
+        string userName = t.UserName;
+        string password = t.Password;
+        int countryCode = t.CountryCode;
+        AirlineCompany airComp = GetAirlineByUserName(t.UserName);
+
+        if (airComp is null)
+        {
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"INSERT INTO AirlineCompany VALUES('{airlineName}','{userName}','{password}',{countryCode});SELECT SCOPE_IDENTITY()";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "AddAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
+                result = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return Add(new AirlineCompany());
+            SQLConnection.SQLClose(conSQL);
         }
 
-        public AirlineCompany Get(int id)
+        else
         {
-            try
+            throw new AirlineAlreadyExistsException($"The airline company {userName} already exists with ID {airComp.Id}");
+        }      
+    }
+
+        public AirlineCompany Get(long id)
+        {
+        SQLConnection.SQLOpen(conSQL);
+        AirlineCompany airComp = null;
+        string cmdStr = $"SELECT * FROM AirlineCompany WHERE ID = {id}";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                if (reader.HasRows)
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    reader.Read();
+                    airComp = new AirlineCompany
                     {
+                        Id = (int)reader["ID"],
+                        AirlineName = (string)reader["AIRLINE_NAME"],
+                        UserName = (string)reader["USER_NAME"],
+                        Password = (string)reader["PASSWORD"],
+                        CountryCode = (int)reader["COUNTRY_CODE"],
+                    };
 
-                        cmd.CommandText = "GetAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return Get(id);
         }
+        SQLConnection.SQLClose(conSQL);
+        return airComp;
+    }
 
-        public void GetAirlineByUsername()
+    public AirlineCompany GetAirlineByUserName(string name)
+    {
+        SQLConnection.SQLOpen(conSQL);
+        AirlineCompany airComp = null;
+        string cmdStr = $"SELECT * FROM AirlineCompany WHERE USER_NAME = '{name}'";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
-            try
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                if (reader.HasRows)
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    reader.Read();
+                    airComp = new AirlineCompany
                     {
+                        Id = (int)reader["ID"],
+                        AirlineName = (string)reader["AIRLINE_NAME"],
+                        UserName = (string)reader["USER_NAME"],
+                        Password = (string)reader["PASSWORD"],
+                        CountryCode = (int)reader["COUNTRY_CODE"]
+                    };
 
-                        cmd.CommandText = "GetAirlineByUsername";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-
-        }
-
-        void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
-        {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "GetAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
             }
         }
 
-        public void GetAllAirlineByCountry()
+        SQLConnection.SQLClose(conSQL);
+        return airComp;
+    }
+
+       public IList<AirlineCompany>  GetAll()
         {
-            try
+        SQLConnection.SQLOpen(conSQL);
+        List<AirlineCompany> airlineCompanies = new List<AirlineCompany>();
+        string cmdStr = $"SELECT * FROM AirlineCompany";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                AirlineCompany airComp = null;
+                while (reader.Read())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    airComp = new AirlineCompany
                     {
+                        Id = (int)reader["Id"],
+                        AirlineName = (string)reader["AirlineName"],
+                        UserName = (string)reader["UserName"],
+                        Password = (string)reader["Password"],
+                        CountryCode = (int)reader["CountryCode"]
+                    };
 
-                        cmd.CommandText = "GetAirlineByCountry";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
+                    airlineCompanies.Add(airComp);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
         }
+        SQLConnection.SQLClose(conSQL);
+        return airlineCompanies;
+    }
 
-        public void Remove(AirlineCompany t)
+    public List<AirlineCompany> GetAllAirlinesCompanyByCountry(int countryId)
+    {
+        SQLConnection.SQLOpen(conSQL);
+        List<AirlineCompany> airlineCompanies = new List<AirlineCompany>();
+        string cmdStr = $"SELECT * FROM AirlineCompany WHERE COUNTRY_CODE = {countryId}";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
-            try
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                AirlineCompany airComp = null;
+                while (reader.Read())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    airComp = new AirlineCompany
                     {
+                        Id = (int)reader["ID"],
+                        AirlineName = (string)reader["AIRLINE_NAME"],
+                        UserName = (string)reader["USER_NAME"],
+                        Password = (string)reader["PASSWORD"],
+                        CountryCode = (int)reader["COUNTRY_CODE"]
+                    };
 
-                        cmd.CommandText = "RemoveAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
+                    airlineCompanies.Add(airComp);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
         }
+        SQLConnection.SQLClose(conSQL);
+        return airlineCompanies;
+    }
 
-        public void Update(AirlineCompany t)
+    public void Remove(AirlineCompany t)
+    {
+        AirlineCompany airComp = Get(t.Id);
+        if (airComp is null)
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "UpdateAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+            throw new AirCompanyNotFoundException($"The airline company  with id {t.Id} does not exist");
         }
-
-        public IList<AirlineCompany> GetAll()
+        SQLConnection.SQLOpen(conSQL);
+        string cmdStr = $"DELETE FROM AirlineCompany WHERE ID = {t.Id}";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
-            try
-            {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "GetAirline";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return GetAll();
+            cmd.ExecuteNonQuery();
         }
+        SQLConnection.SQLClose(conSQL);
+    }
+
+    public void Update(AirlineCompany t)
+    {
+        AirlineCompany airComp = Get(t.Id);
+        if (airComp is null)
+        {
+            throw new AirCompanyNotFoundException($"The airline company  with id {t.Id} does not exist");
+        }
+        SQLConnection.SQLOpen(conSQL);
+        string cmdStr = $"UPDATE AirlineCompany SET AIRLINE_NAME = '{t.AirlineName}'," +
+          $"USER_NAME = '{t.UserName}', PASSWORD = '{t.Password}'," +
+          $"COUNTRY_CODE = {t.CountryCode} WHERE ID = {t.Id}";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+        {
+            cmd.ExecuteNonQuery();
+        }
+        SQLConnection.SQLClose(conSQL);
+    }
+    public void DeleteAll()
+    {
+        SQLConnection.SQLOpen(conSQL);
+        string cmdStr = $"DELETE FROM AirlineCompany ";
+        using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+        {
+            cmd.ExecuteNonQuery();
+        }
+        SQLConnection.SQLClose(conSQL);
+    }
+
+
     }
 }
+
+

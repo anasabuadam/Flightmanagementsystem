@@ -1,158 +1,245 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using Flightmanagementsystem.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Flightmanagementsystem
 {
-    public class TicketDAOPGSQL : ITicketDAO
+
+    public class TicketDAOMSSQL : ITicketDAO
     {
-        string conn_string = "";
-        public void Add(Ticket t)
+        static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
+        Ticket Ticket = new Ticket();   
+        void IBasicDb<Ticket>.Add(Ticket t)
         {
-            try
+            int result = 0;
+            int flightId = t.FlightId;
+            int customerId = t.CustomerId;
+
+            Ticket ticket = GetByAllFields(flightId, customerId);
+
+            if (ticket is null)
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                SQLConnection.SQLOpen(conSQL);
+                string cmdStr = $"INSERT INTO Tickets VALUES({flightId},{customerId});SELECT SCOPE_IDENTITY()";
+                using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "AddTicket";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                SQLConnection.SQLClose(conSQL);
             }
-            catch (Exception ex)
+
+            else
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                throw new TicketAlreadyExistsException($"The flight already exists with ID {ticket.Id}");
             }
+
+            
         }
 
-        Ticket IBasicDb<Ticket>.Get(int Id)
+        Ticket IBasicDb<Ticket>.Get(long id)
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            Ticket ticket = null;
+            string cmdStr = $"SELECT * FROM Tickets WHERE ID = {id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "GetTicke";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                        reader.Read();
+                        ticket = new Ticket
+                        {
+                            Id = (int)reader["ID"],
+                            FlightId = (int)reader["FLIGHT_ID"],
+                            CustomerId = (int)reader["CUSTOMER_ID"]
+                        };
 
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return null;
+            SQLConnection.SQLClose(conSQL);
+            return ticket;
         }
 
         IList<Ticket> IBasicDb<Ticket>.GetAll()
         {
-            try
+            SQLConnection.SQLOpen(conSQL);
+            List<Ticket> tickets = new List<Ticket>();
+            string cmdStr = $"SELECT * FROM Tickets";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
 
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    Ticket ticket = null;
+                    while (reader.Read())
                     {
+                        ticket = new Ticket
+                        {
+                            Id = (int)reader["ID"],
+                            FlightId = (int)reader["FLIGHT_ID"],
+                            CustomerId = (int)reader["CUSTOMER_ID"]
+                        };
 
-                        cmd.CommandText = "GetTicke";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
+                        tickets.Add(ticket);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
-            return null;
+            SQLConnection.SQLClose(conSQL);
+            return tickets;
         }
 
-        public void Remove(Ticket t)
+        public void Remove(Ticket  t)
         {
-            try
+            Ticket ticket = new Ticket();
+            if (ticket is null)
             {
-
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-
-                        cmd.CommandText = "RemoveTicket";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-                    }
-                }
+                throw new TicketNotFoundException($"The ticket  with id {t.Id} does not exist");
             }
-            catch (Exception ex)
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Tickets WHERE ID = { t.Id }";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
-                Console.WriteLine($"Failed to run sp from db {ex}");
+                cmd.ExecuteNonQuery();
             }
+            SQLConnection.SQLClose(conSQL);
         }
 
         public void Update(Ticket t)
         {
-            try
+            Ticket ticket = new Ticket();
+            if (ticket is null)
             {
+                throw new TicketNotFoundException($"The flight  with id {t.Id} does not exist");
+            }
+            SQLConnection.SQLOpen(conSQL);
 
-
-                using (SqlConnection sqlConnection1 = new SqlConnection(conn_string))
+            string cmdStr = $"UPDATE Tickets SET FLIGHT_ID = {t.FlightId}, CUSTOMER_ID = {t.CustomerId} WHERE ID = {t.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+        public Ticket GetByAllFields(int flightId, int customerId)
+        {
+            SQLConnection.SQLOpen(conSQL);
+            Ticket ticket = null;
+            string cmdStr = $"SELECT * FROM Tickets WHERE FLIGHT_ID = {flightId} AND CUSTOMER_ID = {customerId}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    if (reader.HasRows)
                     {
-
-                        cmd.CommandText = "UpdateTicket";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = sqlConnection1;
-
-                        sqlConnection1.Open();
-
-                        cmd.ExecuteNonQuery();
-                        SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+                        reader.Read();
+                        ticket = new Ticket
+                        {
+                            Id = (int)reader["ID"],
+                            FlightId = (int)reader["FLIGHT_ID"],
+                            CustomerId = (int)reader["CUSTOMER_ID"]
+                        };
 
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to run sp from db {ex}");
-            }
+
+            SQLConnection.SQLClose(conSQL);
+            return ticket;
         }
+        public void TransferTicketToHistory(Ticket ticket)
+        {
+            Ticket t = new Ticket();
+            if (t is null)
+            {
+                throw new TicketNotFoundException($"The ticket  with id {ticket.Id} does not exist");
+            }
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"INSERT INTO TicketsHistory VALUES({ticket.Id},{ticket.FlightId},{ticket.CustomerId})";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+            Remove(ticket);
+        }
+        public void DeleteAll()
+        {
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM Tickets ";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+        public void DeleteAllHistory()
+        {
+            SQLConnection.SQLOpen(conSQL);
+            string cmdStr = $"DELETE FROM TicketsHistory ";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                cmd.ExecuteNonQuery();
+            }
+            SQLConnection.SQLClose(conSQL);
+        }
+
+        public List<Ticket> GetTicketsByAirlineCompany(AirlineCompany airline)
+        {
+            SQLConnection.SQLOpen(conSQL);
+            List<Ticket> tickets = new List<Ticket>();
+            string cmdStr = $"SELECT Tickets.ID,Tickets.FLIGHT_ID,Tickets.CUSTOMER_ID FROM Tickets JOIN Flights ON Tickets.FLIGHT_ID = Flights.ID WHERE Flights.AIRLINECOMPANY_ID  = {airline.Id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Ticket ticket = new Ticket
+                        {
+                            Id = (int)reader["ID"],
+                            FlightId = (int)reader["FLIGHT_ID"],
+                            CustomerId = (int)reader["CUSTOMER_ID"]
+                        };
+                        tickets.Add(ticket);
+                    }
+                }
+            }
+            SQLConnection.SQLClose(conSQL);
+            return tickets;
+        }
+        public List<Ticket> GetTicketsByFlight(Flight flight)
+        {
+            SQLConnection.SQLOpen(conSQL);
+            List<Ticket> tickets = new List<Ticket>();
+            string cmdStr = $"SELECT * FROM Tickets WHERE FLIGHT_ID = {flight.Id} ";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Ticket ticket = new Ticket
+                        {
+                            Id = (int)reader["ID"],
+                            FlightId = (int)reader["FLIGHT_ID"],
+                            CustomerId = (int)reader["CUSTOMER_ID"]
+                        };
+                        tickets.Add(ticket);
+                    }
+                }
+            }
+            SQLConnection.SQLClose(conSQL);
+            return tickets;
+        }
+
+
+
+
     }
+
 }

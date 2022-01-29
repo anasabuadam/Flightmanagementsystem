@@ -3,42 +3,77 @@
 namespace Flightmanagementsystem
 {
     public class AirlineCompany : IPoco, IUser
-    {
-        User User = new User();
-
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public long Country_Id { get; set; }
-        public long User_Id { get; set; }
-
-        public AirlineCompany()
+    { 
+        private int _id;
+        private string _airlineName;
+        private string _userName;
+        private string _password;
+        private int _countryCode;
+        public int Id
         {
+
+            get { return _id; }
+            set { _id = value; }
+
+        }
+        public string AirlineName
+        {
+
+            get { return _airlineName; }
+            set { _airlineName = value; }
+
+        }
+        public string UserName
+        {
+
+            get { return _userName; }
+            set { _userName = value; }
+
+
+        }
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
         }
 
-        public AirlineCompany(long id, string name, long country_Id, long user_Id)
+
+        public int CountryCode
         {
-            Id = id;
-            Name = name;
-            Country_Id = country_Id;
-            User_Id = user_Id;
+            get { return _countryCode; }
+            set { _countryCode = value; }
         }
+        public AirlineCompany() { }
+        public AirlineCompany(string airlineName, string userName, string password, int countryCode)
+        {
+            _airlineName = airlineName;
+            _userName = userName;
+            _password = password;
+            _countryCode = countryCode;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AirlineCompany company &&
+                   Id == company.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return + Id.GetHashCode();
+        }
+
         public override string ToString()
         {
-            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+            return ($"AirlineCompany {Id} ,{AirlineName}, {UserName}, {Password}, {CountryCode}");
         }
-
-        public override bool Equals(object obj) => obj is AirlineCompany company &&
-                   Id == company.Id;
-
-        public override int GetHashCode() => HashCode.Combine(Id);
-        public static bool operator !=(AirlineCompany airlineCompany, AirlineCompany airlineCompany1)
+        public static bool operator ==(AirlineCompany ac1, AirlineCompany ac2)
         {
-            return !(airlineCompany == airlineCompany1);
+            return (ac1.Id == ac2.Id);
         }
-        public static bool operator ==(AirlineCompany airlineCompany, AirlineCompany airlineCompany1)
+        public static bool operator !=(AirlineCompany ac1, AirlineCompany ac2)
         {
-            return airlineCompany == airlineCompany1;
+            return !(ac1 == ac2);
         }
-
     }
 }

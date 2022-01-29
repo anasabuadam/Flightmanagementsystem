@@ -2,38 +2,64 @@
 
 namespace Flightmanagementsystem
 {
+
     public class Country : IPoco, IUser
     {
-        public Int64 Id { get; set; }
-        public string Name { get; set; }
+        private int _id;
+        private string _countryName;
 
-        public Country()
+        public int Id
         {
+
+            get { return _id; }
+            set { _id = value; }
+
+        }
+        public string CountryName
+        {
+
+            get { return _countryName; }
+            set { _countryName = value; }
+
         }
 
-        public Country(long id, string name)
+        public Country() { }
+        public Country(string countryName)
         {
-            Id = id;
-            Name = name;
+            _countryName = countryName;
+
         }
+
+
+        public override bool Equals(object obj)
+        {
+            return obj is Country c &&
+                   Id == c.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return  + Id.GetHashCode();
+        }
+
         public override string ToString()
         {
-            return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+            return ($"Country {Id} ,{CountryName}");
         }
 
-        public override bool Equals(object obj) => obj is Country country &&
-                   Id == country.Id;
 
-        public override int GetHashCode() => HashCode.Combine(Id);
 
-        public static bool operator !=(Country country, Country country1)
+        public static bool operator ==(Country c1, Country c2)
         {
-            return !(country == country1);
+            if (c1 == null && c2 == null)
+                return true;
+            if (c1 == null && c2 != null || c2 == null && c1 != null)
+                return false;
+            return (c1.Id == c2.Id);
         }
-        public static bool operator ==(Country country, Country country1)
+        public static bool operator !=(Country c1, Country c2)
         {
-            return country == country1;
+            return !(c1 == c2);
         }
-
     }
 }
