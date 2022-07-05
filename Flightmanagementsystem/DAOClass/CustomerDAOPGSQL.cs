@@ -16,19 +16,19 @@ namespace Flightmanagementsystem
         {
 
             int result = 0;
-            string firstName = t.FirstName; 
-            string lastName = t.LastName;
-            string userName = t.UserName;
-            string password = t.Password;
-            string address = t.Address;
-            string phoneNo = t.PhoneNo;
-            string creditCardNumber = t.CreditCardNumber;
+            Int64 id = t._Id;
+            string firstName = t._FirstName; 
+            string lastName = t._LastName;
+            string address = t._Address;
+            string phonenum = t._PhoneNum;
+            string creditCardNumber = t._CreditCardNum;
+            Int64 userid = t._UserId;
             Customer customer = GetCustomerByUsername("");
 
             if (customer is null)
             {
                 SQLConnection.SQLOpen(conSQL);
-                string cmdStr = $"INSERT INTO Customers VALUES('{firstName}','{lastName}','{userName}','{password}','{address}','{phoneNo}','{creditCardNumber}');SELECT SCOPE_IDENTITY()";
+                string cmdStr = $"INSERT INTO Customers VALUES('{firstName}','{lastName}','{address}','{phonenum}','{creditCardNumber}');SELECT SCOPE_IDENTITY()";
                 using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
                 {
                     result = Convert.ToInt32(cmd.ExecuteScalar());
@@ -38,7 +38,7 @@ namespace Flightmanagementsystem
 
             else
             {
-                throw new CustomerAlreadyExistsException($"The country {userName} already exists with ID {customer.Id}");
+                throw new CustomerAlreadyExistsException($"The country {firstName} already exists with ID {customer._Id}");
             }
 
             return result;
@@ -48,7 +48,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             Customer customer = null;
-            string cmdStr = $"SELECT * FROM Customers WHERE ID = {id}";
+            string cmdStr = $"SELECT * FROM Customers WHERE Id = {id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -58,14 +58,13 @@ namespace Flightmanagementsystem
                         reader.Read();
                         customer = new Customer
                         {
-                            Id = (int)reader["ID"],
-                            FirstName = (string)reader["FIRST_NAME"],
-                            LastName = (string)reader["LAST_NAME"],
-                            UserName = (string)reader["USER_NAME"],
-                            Password = (string)reader["PASSWORD"],
-                            Address = (string)reader["ADDRESS"],
-                            PhoneNo = (string)reader["PHONE_NO"],
-                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                            _Id = (int)reader["Id"],
+                            _FirstName = (string)reader["First_Name"],
+                            _LastName = (string)reader["Last_Name"],
+                            _Address = (string)reader["Address"],
+                            _PhoneNum = (string)reader["Phone_No"],
+                            _CreditCardNum = (string)reader["Credit_Card_No"],
+                            _UserId = (int)reader["User_Id"],
                         };
 
                     }
@@ -88,14 +87,13 @@ namespace Flightmanagementsystem
                     {
                         Customer customer = new Customer
                         {
-                            Id = (int)reader["ID"],
-                            FirstName = (string)reader["FIRST_NAME"],
-                            LastName = (string)reader["LAST_NAME"],
-                            UserName = (string)reader["USER_NAME"],
-                            Password = (string)reader["PASSWORD"],
-                            Address = (string)reader["ADDRESS"],
-                            PhoneNo = (string)reader["PHONE_NO"],
-                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"],
+                            _Id = (int)reader["Id"],
+                            _FirstName = (string)reader["First_Name"],
+                            _LastName = (string)reader["Last_Name"],
+                            _Address = (string)reader["Address"],
+                            _PhoneNum = (string)reader["Phone_No"],
+                            _CreditCardNum = (string)reader["Credit_Card_No"],
+                            _UserId = (int)reader["User_Id"],
                         };
                         customers.Add(customer);
                     }
@@ -119,14 +117,13 @@ namespace Flightmanagementsystem
                         reader.Read();
                         c = new Customer
                         {
-                            Id = (int)reader["ID"],
-                            FirstName = (string)reader["FIRST_NAME"],
-                            LastName = (string)reader["LAST_NAME"],
-                            UserName = (string)reader["USER_NAME"],
-                            Password = (string)reader["PASSWORD"],
-                            Address = (string)reader["ADDRESS"],
-                            PhoneNo = (string)reader["PHONE_NO"],
-                            CreditCardNumber = (string)reader["CREDIT_CARD_NUMBER"]
+                            _Id = (int)reader["Id"],
+                            _FirstName = (string)reader["First_Name"],
+                            _LastName = (string)reader["Last_Name"],
+                            _Address = (string)reader["Address"],
+                            _PhoneNum = (string)reader["Phone_No"],
+                            _CreditCardNum = (string)reader["Credit_Card_No"],
+                            _UserId = (int)reader["User_Id"],
                         };
                        
 
@@ -140,13 +137,13 @@ namespace Flightmanagementsystem
 
         public void Remove(Customer t)
         {
-            Customer customer = Get(t.Id);
+            Customer customer = Get((int)t._Id);
             if (customer is null)
             {
-                throw new CustomerNotFoundException($"The customer  with id {t.Id} does not exist");
+                throw new CustomerNotFoundException($"The customer  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"DELETE FROM Customers WHERE ID = {t.Id}";
+            string cmdStr = $"DELETE FROM Customers WHERE Id = {t._Id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -156,15 +153,15 @@ namespace Flightmanagementsystem
 
         public void Update(Customer t)
         {
-            Customer customer = Get(t.Id);
+            Customer customer = Get((int)t._Id);
             if (customer is null)
             {
-                throw new CustomerNotFoundException($"The customer  with id {t.Id} does not exist");
+                throw new CustomerNotFoundException($"The customer  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"UPDATE Customers SET FIRST_NAME = '{t.FirstName}',LAST_NAME = '{t.LastName}'," +
-                $"USER_NAME = '{t.UserName}', PASSWORD = '{t.Password}',Address = '{t.Address}',PHONE_NO = '{t.PhoneNo}'," +
-                $"CREDIT_CARD_NUMBER = '{t.CreditCardNumber}' WHERE ID = {t.Id}";
+            string cmdStr = $"UPDATE Customers SET Id = '{t._Id}',First_Name = '{t._FirstName}'," +
+                $"Last_Name = '{t._LastName}', Address = '{t._Address}',Phone_No = '{t._PhoneNum}'," +
+                $"Credit_Card_No = '{t._CreditCardNum} User_Id = '{t._UserId}' WHERE Id = {t._Id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();

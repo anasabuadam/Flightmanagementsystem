@@ -14,8 +14,8 @@ namespace Flightmanagementsystem
         void IBasicDb<Country>.Add(Country t)
         {
             int result = 0;
-            string countryName = t.CountryName;
-            string cmdStr = $"SELECT * FROM Countries WHERE COUNTRY_NAME = '{countryName}'";
+            string countryName = t._Name;
+            string cmdStr = $"SELECT * FROM Countries WHERE Name = '{countryName}'";
             SQLConnection.SQLOpen(conSQL);
             int countryId = 0;
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
@@ -48,7 +48,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             Country country = null;
-            string cmdStr = $"SELECT * FROM Countries WHERE ID = {id}";
+            string cmdStr = $"SELECT * FROM Countries WHERE Id = {id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -58,8 +58,8 @@ namespace Flightmanagementsystem
                         reader.Read();
                         country = new Country
                         {
-                            Id = (int)reader["ID"],
-                            CountryName = (string)reader["COUNTRY_NAME"],
+                            _id = (int)reader["Id"],
+                            _Name = (string)reader["Name"],
                         };
                     }
                 }
@@ -73,7 +73,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             List<Country> countries = new List<Country>();
-            string cmdStr = $"SELECT * FROM Countrie";
+            string cmdStr = $"SELECT * FROM Countries";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -83,8 +83,8 @@ namespace Flightmanagementsystem
                     {
                         country = new Country
                         {
-                            Id = (int)reader["ID"],
-                            CountryName = (string)reader["COUNTRY_NAME"],
+                            _id = (int)reader["Id"],
+                            _Name = (string)reader["Name"],
                         };
                         countries.Add(country);
                     }
@@ -96,13 +96,13 @@ namespace Flightmanagementsystem
 
         public void Remove(Country t)
         {
-            Country country = Get(t.Id);
+            Country country = Get(t._id);
             if (country is null)
             {
-                throw new CountryNotFoundException($"The country  with id {t.Id} does not exist");
+                throw new CountryNotFoundException($"The country  with id {t._id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"DELETE FROM Countries WHERE ID = {t.Id}";
+            string cmdStr = $"DELETE FROM Countries WHERE ID = {t._id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -112,13 +112,13 @@ namespace Flightmanagementsystem
 
         public void Update(Country t)
         {
-            Country country = Get(t.Id);
+            Country country = Get(t._id);
             if (country is null)
             {
-                throw new CountryNotFoundException($"The country  with id {t.Id}  does not exist");
+                throw new CountryNotFoundException($"The country  with id {t._id}  does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"UPDATE Countries SET COUNTRY_NAME = '{t.CountryName}' WHERE ID = {t.Id}";
+            string cmdStr = $"UPDATE Countries SET Name = '{t._Name}' WHERE Id = {t._id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -129,7 +129,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             Country c = null;
-            string cmdStr = $"SELECT * FROM Countries WHERE COUNTRY_NAME = '{name}'";
+            string cmdStr = $"SELECT * FROM Countries WHERE Name = '{name}'";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -139,8 +139,8 @@ namespace Flightmanagementsystem
                         reader.Read();
                         c = new Country
                         {
-                            Id = (int)reader["ID"],
-                            CountryName = (string)reader["COUNTRY_NAME"],
+                            _id = (int)reader["Id"],
+                            _Name = (string)reader["Name"],
                         };
 
                     }

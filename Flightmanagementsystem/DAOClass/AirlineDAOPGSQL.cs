@@ -14,16 +14,16 @@ namespace Flightmanagementsystem
      void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
         {
         int result = 0;
-        string airlineName = t.AirlineName;
-        string userName = t.UserName;
-        string password = t.Password;
-        int countryCode = t.CountryCode;
-        AirlineCompany airComp = GetAirlineByUserName(t.UserName);
+            Int64 id = t._id;
+        string name = t._Name;
+            int countryid = t.CountryId;
+            Int64 userid = t.User_Id;
+        AirlineCompany airComp = GetAirlineByUserName(t._Name);
 
         if (airComp is null)
         {
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"INSERT INTO AirlineCompany VALUES('{airlineName}','{userName}','{password}',{countryCode});SELECT SCOPE_IDENTITY()";
+            string cmdStr = $"INSERT INTO Airline_Companies VALUES('{id}','{name}','{countryid}',{userid});SELECT SCOPE_IDENTITY()";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 result = Convert.ToInt32(cmd.ExecuteScalar());
@@ -33,7 +33,7 @@ namespace Flightmanagementsystem
 
         else
         {
-            throw new AirlineAlreadyExistsException($"The airline company {userName} already exists with ID {airComp.Id}");
+            throw new AirlineAlreadyExistsException($"The airline company {name} already exists with ID {airComp._id}");
         }      
     }
 
@@ -41,7 +41,7 @@ namespace Flightmanagementsystem
         {
         SQLConnection.SQLOpen(conSQL);
         AirlineCompany airComp = null;
-        string cmdStr = $"SELECT * FROM AirlineCompany WHERE ID = {id}";
+        string cmdStr = $"SELECT * FROM Airline_Companies WHERE ID = {id}";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -51,11 +51,11 @@ namespace Flightmanagementsystem
                     reader.Read();
                     airComp = new AirlineCompany
                     {
-                        Id = (int)reader["ID"],
-                        AirlineName = (string)reader["AIRLINE_NAME"],
-                        UserName = (string)reader["USER_NAME"],
-                        Password = (string)reader["PASSWORD"],
-                        CountryCode = (int)reader["COUNTRY_CODE"],
+                        _id = (Int64)reader["Id"],
+                        _Name = (string)reader["Name"],
+                        CountryId = (int)reader["CountryId"],
+                        User_Id = (Int64)reader["User_Id"]
+                      
                     };
 
                 }
@@ -69,7 +69,7 @@ namespace Flightmanagementsystem
     {
         SQLConnection.SQLOpen(conSQL);
         AirlineCompany airComp = null;
-        string cmdStr = $"SELECT * FROM AirlineCompany WHERE USER_NAME = '{name}'";
+        string cmdStr = $"SELECT * FROM Airline_Companies WHERE Name = '{name}'";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -79,11 +79,10 @@ namespace Flightmanagementsystem
                     reader.Read();
                     airComp = new AirlineCompany
                     {
-                        Id = (int)reader["ID"],
-                        AirlineName = (string)reader["AIRLINE_NAME"],
-                        UserName = (string)reader["USER_NAME"],
-                        Password = (string)reader["PASSWORD"],
-                        CountryCode = (int)reader["COUNTRY_CODE"]
+                        _id = (Int64)reader["Id"],
+                        _Name = (string)reader["Name"],
+                        CountryId = (int)reader["CountryId"],
+                        User_Id = (Int64)reader["User_Id"]
                     };
 
                 }
@@ -98,7 +97,7 @@ namespace Flightmanagementsystem
         {
         SQLConnection.SQLOpen(conSQL);
         List<AirlineCompany> airlineCompanies = new List<AirlineCompany>();
-        string cmdStr = $"SELECT * FROM AirlineCompany";
+        string cmdStr = $"SELECT * FROM Airline_Companies";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -108,11 +107,10 @@ namespace Flightmanagementsystem
                 {
                     airComp = new AirlineCompany
                     {
-                        Id = (int)reader["Id"],
-                        AirlineName = (string)reader["AirlineName"],
-                        UserName = (string)reader["UserName"],
-                        Password = (string)reader["Password"],
-                        CountryCode = (int)reader["CountryCode"]
+                        _id = (Int64)reader["Id"],
+                        _Name = (string)reader["Name"],
+                        CountryId = (int)reader["CountryId"],
+                        User_Id = (Int64)reader["User_Id"]
                     };
 
                     airlineCompanies.Add(airComp);
@@ -127,7 +125,7 @@ namespace Flightmanagementsystem
     {
         SQLConnection.SQLOpen(conSQL);
         List<AirlineCompany> airlineCompanies = new List<AirlineCompany>();
-        string cmdStr = $"SELECT * FROM AirlineCompany WHERE COUNTRY_CODE = {countryId}";
+        string cmdStr = $"SELECT * FROM Airline_Companies WHERE COUNTRY_CODE = {countryId}";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -137,11 +135,10 @@ namespace Flightmanagementsystem
                 {
                     airComp = new AirlineCompany
                     {
-                        Id = (int)reader["ID"],
-                        AirlineName = (string)reader["AIRLINE_NAME"],
-                        UserName = (string)reader["USER_NAME"],
-                        Password = (string)reader["PASSWORD"],
-                        CountryCode = (int)reader["COUNTRY_CODE"]
+                        _id = (Int64)reader["Id"],
+                        _Name = (string)reader["Name"],
+                        CountryId = (int)reader["CountryId"],
+                        User_Id = (Int64)reader["User_Id"]
                     };
 
                     airlineCompanies.Add(airComp);
@@ -154,13 +151,13 @@ namespace Flightmanagementsystem
 
     public void Remove(AirlineCompany t)
     {
-        AirlineCompany airComp = Get(t.Id);
+        AirlineCompany airComp = Get(t._id);
         if (airComp is null)
         {
-            throw new AirCompanyNotFoundException($"The airline company  with id {t.Id} does not exist");
+            throw new AirCompanyNotFoundException($"The airline company  with id {t._id} does not exist");
         }
         SQLConnection.SQLOpen(conSQL);
-        string cmdStr = $"DELETE FROM AirlineCompany WHERE ID = {t.Id}";
+        string cmdStr = $"DELETE FROM Airline_Companies WHERE ID = {t._id}";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             cmd.ExecuteNonQuery();
@@ -170,15 +167,15 @@ namespace Flightmanagementsystem
 
     public void Update(AirlineCompany t)
     {
-        AirlineCompany airComp = Get(t.Id);
+        AirlineCompany airComp = Get(t._id);
         if (airComp is null)
         {
-            throw new AirCompanyNotFoundException($"The airline company  with id {t.Id} does not exist");
+            throw new AirCompanyNotFoundException($"The airline company  with id {t._id} does not exist");
         }
         SQLConnection.SQLOpen(conSQL);
-        string cmdStr = $"UPDATE AirlineCompany SET AIRLINE_NAME = '{t.AirlineName}'," +
-          $"USER_NAME = '{t.UserName}', PASSWORD = '{t.Password}'," +
-          $"COUNTRY_CODE = {t.CountryCode} WHERE ID = {t.Id}";
+        string cmdStr = $"UPDATE Airline_Companies SET Id = '{t._id}'," +
+          $"Name = '{t._Name}', CountryId = '{t.CountryId}'," +
+          $"User_Id = {t.User_Id}";
         using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
         {
             cmd.ExecuteNonQuery();

@@ -6,93 +6,41 @@ namespace Flightmanagementsystem
     public class Customer : IPoco, IUser
 
     {
-        private int _id;
-        private string _firstName;
-        private string _lastName;
-        private string _userName;
-        private string _password;
-        private string _address;
-        private string _phoneNo;
-        private string _creditCardNumber;
-        public int Id
-        {
-
-
-            get { return _id; }
-            set { _id = value; }
-
-        }
-        public string FirstName
-        {
-
-            get { return _firstName; }
-            set { _firstName = value; }
-
-        }
-        public string LastName
-        {
-
-            get { return _lastName; }
-            set { _lastName = value; }
-
-        }
-        public string UserName
-        {
-
-            get { return _userName; }
-            set { _userName = value; }
-
-
-        }
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
-        }
-
-
-        public string Address
-        {
-            get { return _address; }
-            set { _address = value; }
-        }
-        public string PhoneNo
-        {
-            get { return _phoneNo; }
-            set { _phoneNo = value; }
-        }
-        public string CreditCardNumber
-        {
-            get { return _creditCardNumber; }
-            set { _creditCardNumber = value; }
-        }
+        public Int64 _Id { get; set; }
+        public string _FirstName { get; set; }
+        public string _LastName { get; set; }
+        public string _Address { get; set; }
+        public string _PhoneNum { get; set; }
+        public string _CreditCardNum { get; set; }
+        public Int64 _UserId { get; set; }
+       
         public Customer() { }
 
-        public Customer(string firstName, string lastName, string userName, string password, string address, string phoneNo, string creditCardNumber)
+        public Customer(long id, string firstName, string lastName, string address, string phoneNum, string creditCardNum, long userId)
         {
-            _firstName = firstName;
-            _lastName = lastName;
-            _userName = userName;
-            _password = password;
-            _address = address;
-            _phoneNo = phoneNo;
-            _creditCardNumber = creditCardNumber;
+            _Id = id;
+            _FirstName = firstName;
+            _LastName = lastName;
+            _Address = address;
+            _PhoneNum = phoneNum;
+            _CreditCardNum = creditCardNum;
+            _UserId = userId;
         }
 
         public override bool Equals(object obj)
         {
             return obj is Customer c &&
-                   Id == c.Id;
+                   _Id == c._Id;
         }
 
         public override string ToString()
         {
-            return ($"Customer {Id} ,{FirstName}, {LastName}, {UserName}, {Password}, {Address}, {PhoneNo}, {CreditCardNumber}");
+            return ($"Customer {_Id} ,{_FirstName}, {_LastName}, {_Address}, {_PhoneNum}, {_CreditCardNum}");
         }
 
         public override int GetHashCode()
         {
-            return + Id.GetHashCode();
+            return + _Id.GetHashCode();
         }
 
         public static bool operator ==(Customer customer, Customer customer1)
@@ -101,7 +49,7 @@ namespace Flightmanagementsystem
                 return true;
             if (customer == null && customer1 != null || customer1 == null && customer != null)
                 return false;
-            return (customer.Id == customer1.Id);
+            return (customer._Id == customer1._Id);
         }
         public static bool operator !=(Customer customer, Customer customer1)
         {

@@ -6,9 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Flightmanagementsystem.DAOClass;
+namespace Flightmanagementsystem.DAOClass
+{
 
-public interface IFlightDAO : IBasicDb<Flight>
+
+
+    public interface IFlightDAO : IBasicDb<Flight>
     {
         Dictionary<Flight, int> GetAllFlightsVacancy();
         // Flight GetFlightById(int id);=> Get(id)
@@ -23,5 +26,6 @@ public interface IFlightDAO : IBasicDb<Flight>
         List<Flight> GetFlightsByCustomer(Customer customer);
 
     }
+}
 
 

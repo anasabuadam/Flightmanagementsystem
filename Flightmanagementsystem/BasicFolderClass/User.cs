@@ -4,26 +4,26 @@ namespace Flightmanagementsystem
 {
     public class User : IPoco, IUser
     {
-        public Int64 Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public Int32 User_Role { get; set; }
+        public Int64 _Id { get; set; }
+        public string _Username { get; set; }
+        public string _Password { get; set; }
+        public string _Email { get; set; }
+        public Int32 _User_Role { get; set; }
 
         public User()
         {
 
         }
 
-
         public User(long id, string username, string password, string email, int user_Role)
         {
-            Id = id;
-            Username = username;
-            Password = password;
-            Email = email;
-            User_Role = user_Role;
+            _Id = id;
+            _Username = username;
+            _Password = password;
+            _Email = email;
+            _User_Role = user_Role;
         }
+
         public override string ToString()
         {
             return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
@@ -32,12 +32,12 @@ namespace Flightmanagementsystem
         public override bool Equals(object obj)
         {
             return obj is User user &&
-                   Id == user.Id;
+                   _Id == user._Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Username, Password, Email, User_Role);
+            return HashCode.Combine(_Id, _Username, _Password, _Email, _User_Role);
         }
 
         public static bool operator !=(User user, User user1)

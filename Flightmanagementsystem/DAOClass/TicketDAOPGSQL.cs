@@ -15,8 +15,9 @@ namespace Flightmanagementsystem
         void IBasicDb<Ticket>.Add(Ticket t)
         {
             int result = 0;
-            int flightId = t.FlightId;
-            int customerId = t.CustomerId;
+            Int64 id = t._Id;
+            Int64 flightId = t.FlightId;
+            Int64 customerId = t.CustomerId;
 
             Ticket ticket = GetByAllFields(flightId, customerId);
 
@@ -33,17 +34,18 @@ namespace Flightmanagementsystem
 
             else
             {
-                throw new TicketAlreadyExistsException($"The flight already exists with ID {ticket.Id}");
+                throw new TicketAlreadyExistsException($"The flight already exists with ID {ticket._Id}");
             }
 
             
         }
 
+
         Ticket IBasicDb<Ticket>.Get(long id)
         {
             SQLConnection.SQLOpen(conSQL);
             Ticket ticket = null;
-            string cmdStr = $"SELECT * FROM Tickets WHERE ID = {id}";
+            string cmdStr = $"SELECT * FROM Tickets WHERE id = {id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -53,9 +55,9 @@ namespace Flightmanagementsystem
                         reader.Read();
                         ticket = new Ticket
                         {
-                            Id = (int)reader["ID"],
-                            FlightId = (int)reader["FLIGHT_ID"],
-                            CustomerId = (int)reader["CUSTOMER_ID"]
+                            _Id = (int)reader["id"],
+                            FlightId = (int)reader["Flight_Id"],
+                            CustomerId = (int)reader["Customer_Id"]
                         };
 
                     }
@@ -80,9 +82,9 @@ namespace Flightmanagementsystem
                     {
                         ticket = new Ticket
                         {
-                            Id = (int)reader["ID"],
-                            FlightId = (int)reader["FLIGHT_ID"],
-                            CustomerId = (int)reader["CUSTOMER_ID"]
+                            _Id = (int)reader["id"],
+                            FlightId = (int)reader["Flight_Id"],
+                            CustomerId = (int)reader["Customer_Id"]
                         };
 
                         tickets.Add(ticket);
@@ -98,10 +100,10 @@ namespace Flightmanagementsystem
             Ticket ticket = new Ticket();
             if (ticket is null)
             {
-                throw new TicketNotFoundException($"The ticket  with id {t.Id} does not exist");
+                throw new TicketNotFoundException($"The ticket  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"DELETE FROM Tickets WHERE ID = { t.Id }";
+            string cmdStr = $"DELETE FROM Tickets WHERE id = { t._Id }";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -114,22 +116,22 @@ namespace Flightmanagementsystem
             Ticket ticket = new Ticket();
             if (ticket is null)
             {
-                throw new TicketNotFoundException($"The flight  with id {t.Id} does not exist");
+                throw new TicketNotFoundException($"The flight  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
 
-            string cmdStr = $"UPDATE Tickets SET FLIGHT_ID = {t.FlightId}, CUSTOMER_ID = {t.CustomerId} WHERE ID = {t.Id}";
+            string cmdStr = $"UPDATE Tickets SET Flight_Id = {t.FlightId}, Customer_Id = {t.CustomerId} WHERE id = {t._Id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
             }
             SQLConnection.SQLClose(conSQL);
         }
-        public Ticket GetByAllFields(int flightId, int customerId)
+        public Ticket GetByAllFields(Int64 flightId, Int64 customerId)
         {
             SQLConnection.SQLOpen(conSQL);
             Ticket ticket = null;
-            string cmdStr = $"SELECT * FROM Tickets WHERE FLIGHT_ID = {flightId} AND CUSTOMER_ID = {customerId}";
+            string cmdStr = $"SELECT * FROM Tickets WHERE Flight_Id = {flightId} AND Customer_Id = {customerId}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -139,9 +141,9 @@ namespace Flightmanagementsystem
                         reader.Read();
                         ticket = new Ticket
                         {
-                            Id = (int)reader["ID"],
-                            FlightId = (int)reader["FLIGHT_ID"],
-                            CustomerId = (int)reader["CUSTOMER_ID"]
+                            _Id = (int)reader["id"],
+                            FlightId = (int)reader["Flight_Id"],
+                            CustomerId = (int)reader["Customer_Id"]
                         };
 
                     }
@@ -156,10 +158,10 @@ namespace Flightmanagementsystem
             Ticket t = new Ticket();
             if (t is null)
             {
-                throw new TicketNotFoundException($"The ticket  with id {ticket.Id} does not exist");
+                throw new TicketNotFoundException($"The ticket  with id {ticket._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"INSERT INTO TicketsHistory VALUES({ticket.Id},{ticket.FlightId},{ticket.CustomerId})";
+            string cmdStr = $"INSERT INTO TicketsHistory VALUES({ticket._Id},{ticket.FlightId},{ticket.CustomerId})";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -192,7 +194,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             List<Ticket> tickets = new List<Ticket>();
-            string cmdStr = $"SELECT Tickets.ID,Tickets.FLIGHT_ID,Tickets.CUSTOMER_ID FROM Tickets JOIN Flights ON Tickets.FLIGHT_ID = Flights.ID WHERE Flights.AIRLINECOMPANY_ID  = {airline.Id}";
+            string cmdStr = $"SELECT Tickets.id,Tickets.Flight_Id,Tickets.Customer_Id FROM Tickets JOIN Flights ON Tickets.Flight_Id = Flights.id WHERE Flights.Airline_Company_Id  = {airline._id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -201,9 +203,9 @@ namespace Flightmanagementsystem
                     {
                         Ticket ticket = new Ticket
                         {
-                            Id = (int)reader["ID"],
-                            FlightId = (int)reader["FLIGHT_ID"],
-                            CustomerId = (int)reader["CUSTOMER_ID"]
+                            _Id = (int)reader["id"],
+                            FlightId = (int)reader["Flight_Id"],
+                            CustomerId = (int)reader["Customer_Id"]
                         };
                         tickets.Add(ticket);
                     }
@@ -216,7 +218,7 @@ namespace Flightmanagementsystem
         {
             SQLConnection.SQLOpen(conSQL);
             List<Ticket> tickets = new List<Ticket>();
-            string cmdStr = $"SELECT * FROM Tickets WHERE FLIGHT_ID = {flight.Id} ";
+            string cmdStr = $"SELECT * FROM Tickets WHERE Flight_Id = {flight._Id} ";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -225,9 +227,9 @@ namespace Flightmanagementsystem
                     {
                         Ticket ticket = new Ticket
                         {
-                            Id = (int)reader["ID"],
-                            FlightId = (int)reader["FLIGHT_ID"],
-                            CustomerId = (int)reader["CUSTOMER_ID"]
+                            _Id = (int)reader["id"],
+                            FlightId = (int)reader["Flight_Id"],
+                            CustomerId = (int)reader["Customer_Id"]
                         };
                         tickets.Add(ticket);
                     }

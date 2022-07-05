@@ -11,81 +11,24 @@ namespace Flightmanagementsystem
 
 
     {
-        private int _id;
-        private int _airlineCompanyId;
-        private int _originCountryCode;
-        private int _destinationCountryCode;
-        private string _departureTime;
-        private string _landingTime;
-        private int _remainingTickets;
-        private int _flightStatus;
-        public int Id
+        public Int64 _Id { get; set; }
+        public Int64 _AirlineCompanyId { get; set; }
+        public int _OriginCountryId { get; set; }
+        public int _DestinationCountryId { get; set; }
+        public DateTime _DepartureTime { get; set; }
+        public DateTime _LandingTime { get; set; }
+        public int _RimainingTickets { get; set; }
+
+        public Flight(long id, long airlineCompanyId, int originCountryId, int destinationCountryId, DateTime departureTime, DateTime landingTime, int rimainingTickets)
         {
-
-            get { return _id; }
-            set { _id = value; }
-
+            _Id = id;
+            _AirlineCompanyId = airlineCompanyId;
+            _OriginCountryId = originCountryId;
+            _DestinationCountryId = destinationCountryId;
+            _DepartureTime = departureTime;
+            _LandingTime = landingTime;
+            _RimainingTickets = rimainingTickets;
         }
-        public int AirlineCompanyId
-        {
-
-            get { return _airlineCompanyId; }
-            set { _airlineCompanyId = value; }
-
-        }
-        public int OriginCountryCode
-        {
-
-            get { return _originCountryCode; }
-            set { _originCountryCode = value; }
-
-        }
-        public int DestinationCountryCode
-        {
-
-            get { return _destinationCountryCode; }
-            set { _destinationCountryCode = value; }
-
-        }
-        public string DepartureTime
-        {
-
-            get { return _departureTime; }
-            set { _departureTime = value; }
-
-        }
-        public string LandingTime
-        {
-
-            get { return _landingTime; }
-            set { _landingTime = value; }
-
-        }
-        public int RemainingTickets
-        {
-
-            get { return _remainingTickets; }
-            set { _remainingTickets = value; }
-
-        }
-        public int FlightStatus
-        {
-
-            get { return _flightStatus; }
-            set { _flightStatus = value; }
-
-        }
-        public Flight(int airlineCompanyId, int originCountryCode, int destinationCountryCode, string departureTime, string landingTime, int remainingTickets, int flightStatus)
-        {
-            _airlineCompanyId = airlineCompanyId;
-            _originCountryCode = originCountryCode;
-            _destinationCountryCode = destinationCountryCode;
-            _departureTime = departureTime;
-            _landingTime = landingTime;
-            _remainingTickets = remainingTickets;
-            _flightStatus = flightStatus;
-        }
-
 
         public Flight() { }
 
@@ -94,24 +37,24 @@ namespace Flightmanagementsystem
         public override bool Equals(object obj)
         {
             return obj is Flight f &&
-                   Id == f.Id;
+                   _Id == f._Id;
         }
 
 
 
         public override string ToString()
         {
-            return ($"Flight {Id} ,{AirlineCompanyId}, {OriginCountryCode}, {DestinationCountryCode}, {DepartureTime}, {LandingTime}, {RemainingTickets}, {FlightStatus}");
+            return ($"Flight {_Id} ,{_AirlineCompanyId}, {_OriginCountryId}, {_DestinationCountryId}, {_DepartureTime}, {_LandingTime}, {_RimainingTickets}");
         }
 
         public override int GetHashCode()
         {
-            return  + Id.GetHashCode();
+            return  + _Id.GetHashCode();
         }
 
         public static bool operator ==(Flight f1, Flight f2)
         {
-            return (f1.Id == f2.Id);
+            return (f1._Id == f2._Id);
         }
         public static bool operator !=(Flight f1, Flight f2)
         {

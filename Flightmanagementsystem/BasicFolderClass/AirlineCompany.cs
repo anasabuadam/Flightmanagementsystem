@@ -3,73 +3,42 @@
 namespace Flightmanagementsystem
 {
     public class AirlineCompany : IPoco, IUser
-    { 
-        private int _id;
-        private string _airlineName;
-        private string _userName;
-        private string _password;
-        private int _countryCode;
-        public int Id
-        {
+    {
+        public Int64 _id { get; set; }
+        public string _Name { get; set; }
+       public int CountryId { get; set; }
+        public Int64 User_Id { get; set; }
+       
 
-            get { return _id; }
-            set { _id = value; }
-
-        }
-        public string AirlineName
-        {
-
-            get { return _airlineName; }
-            set { _airlineName = value; }
-
-        }
-        public string UserName
-        {
-
-            get { return _userName; }
-            set { _userName = value; }
-
-
-        }
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
-        }
-
-
-        public int CountryCode
-        {
-            get { return _countryCode; }
-            set { _countryCode = value; }
-        }
+      
         public AirlineCompany() { }
-        public AirlineCompany(string airlineName, string userName, string password, int countryCode)
+
+        public AirlineCompany(long id, string name, int countryId, long user_Id)
         {
-            _airlineName = airlineName;
-            _userName = userName;
-            _password = password;
-            _countryCode = countryCode;
+            _id = id;
+            _Name = name;
+            CountryId = countryId;
+            User_Id = user_Id;
         }
 
         public override bool Equals(object obj)
         {
             return obj is AirlineCompany company &&
-                   Id == company.Id;
+                   _id == company._id;
         }
 
         public override int GetHashCode()
         {
-            return + Id.GetHashCode();
+            return + _id.GetHashCode();
         }
 
         public override string ToString()
         {
-            return ($"AirlineCompany {Id} ,{AirlineName}, {UserName}, {Password}, {CountryCode}");
+            return ($"AirlineCompany {_id} ,{_Name}, {CountryId},  {User_Id}");
         }
         public static bool operator ==(AirlineCompany ac1, AirlineCompany ac2)
         {
-            return (ac1.Id == ac2.Id);
+            return (ac1._id == ac2._id);
         }
         public static bool operator !=(AirlineCompany ac1, AirlineCompany ac2)
         {

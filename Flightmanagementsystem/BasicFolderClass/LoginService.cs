@@ -3,18 +3,18 @@ using Flightmanagementsystem.Exceptions;
 
 namespace Flightmanagementsystem
 {
- 
-        public class LoginService : ILoginService
-        {
+
+    public class LoginService : ILoginService
+    {
         private IAirlineDAO _airlineDAO;
         private ICustomerDAO _customerDAO;
-        public  bool TryAdminLogin(string userName, string password, out LoginToken<Administrator> token)
+        public bool TryAdminLogin(string userName, string password, out LoginToken<Administrator> token)
         {
             bool result = false;
             token = null;
-  
-           
-            if (userName == userName && password == password)
+            Administrator administrator = new Administrator();
+
+            if (userName == administrator.First_Name  && password == administrator.Id.ToString())
             {
                 token = new LoginToken<Administrator>();
                 token._user = new Administrator();
@@ -34,7 +34,7 @@ namespace Flightmanagementsystem
             airline = _airlineDAO1.GetAirlineByUserName(userName);
             if (!(airline is null))
             {
-                if (airline.Password != password)
+                if (airline._Name != password)
                 {
                     throw new WrongPasswordException("This password is wrong");
                 }
@@ -60,7 +60,7 @@ namespace Flightmanagementsystem
             customer = _customerDAO1.GetCustomerByUsername(userName.Trim());
             if (!(customer is null))
             {
-                if (customer.Password != password)
+                if (customer._FirstName != password)
                 {
                     throw new WrongPasswordException("This password is wrong");
                 }
@@ -89,16 +89,22 @@ namespace Flightmanagementsystem
                 else
                 {
                     LoginToken<Customer> tokenC = null;
-                    result = TryCustomerLogin(password, userName, out tokenC);
+                    result = TryCustomerLogin(password, userName, out LoginToken<Customer> tokin) ;
                     if (result == true)
-                        token = tokenC;
+                        tokin = tokenC;
                     else
                         throw new UserNotFoundException("User Not Found");
                 }
 
             }
 
+            token = null;
             return result;
+
+
         }
+
     }
 }
+
+

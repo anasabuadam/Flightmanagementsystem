@@ -5,46 +5,31 @@ namespace Flightmanagementsystem
 
     public class Country : IPoco, IUser
     {
-        private int _id;
-        private string _countryName;
-
-        public int Id
-        {
-
-            get { return _id; }
-            set { _id = value; }
-
-        }
-        public string CountryName
-        {
-
-            get { return _countryName; }
-            set { _countryName = value; }
-
-        }
-
+        public Int64 _id { get; set; }
+      public String _Name { get; set; }
+        
         public Country() { }
-        public Country(string countryName)
+
+        public Country(long id, string name)
         {
-            _countryName = countryName;
-
+            _id = id;
+            _Name = name;
         }
-
 
         public override bool Equals(object obj)
         {
             return obj is Country c &&
-                   Id == c.Id;
+                   _id ==c._id;
         }
 
         public override int GetHashCode()
         {
-            return  + Id.GetHashCode();
+            return  + _id.GetHashCode();
         }
 
         public override string ToString()
         {
-            return ($"Country {Id} ,{CountryName}");
+            return ($"Country {_id } ,{_Name}");
         }
 
 
@@ -55,7 +40,7 @@ namespace Flightmanagementsystem
                 return true;
             if (c1 == null && c2 != null || c2 == null && c1 != null)
                 return false;
-            return (c1.Id == c2.Id);
+            return (c1._id == c2._id);
         }
         public static bool operator !=(Country c1, Country c2)
         {
