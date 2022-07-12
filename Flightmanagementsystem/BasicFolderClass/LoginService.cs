@@ -34,7 +34,7 @@ namespace Flightmanagementsystem
             airline = _airlineDAO1.GetAirlineByUserName(userName);
             if (!(airline is null))
             {
-                if (airline._Name != password)
+                if (airline._Name != userName)
                 {
                     throw new WrongPasswordException("This password is wrong");
                 }
@@ -75,21 +75,24 @@ namespace Flightmanagementsystem
         }
         public bool TryLogin(string userName, string password, out ILoginToken token)
         {
+            Administrator administrator = new Administrator();
+            Customer customer = new Customer();
+            AirlineCompany airline = new AirlineCompany();
             bool result = false;
             LoginToken<Administrator> tokenA = null;
-            result = TryAdminLogin(userName, password, out tokenA);
+            result = TryAdminLogin(administrator.First_Name, administrator.Id.ToString(), out tokenA);
             if (result == true)
                 token = tokenA;
             else
             {
                 LoginToken<AirlineCompany> tokenAC = null;
-                result = TryAirlineLogin(userName, password, out tokenAC);
+                result = TryAirlineLogin(airline._Name , airline._id.ToString(), out tokenAC);
                 if (result == true)
                     token = tokenAC;
                 else
                 {
                     LoginToken<Customer> tokenC = null;
-                    result = TryCustomerLogin(password, userName, out LoginToken<Customer> tokin) ;
+                    result = TryCustomerLogin(customer._FirstName, customer._Id.ToString(), out LoginToken<Customer> tokin) ;
                     if (result == true)
                         tokin = tokenC;
                     else

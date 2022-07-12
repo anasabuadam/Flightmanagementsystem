@@ -39,11 +39,24 @@ namespace ConsoleTests
 
 
 
-            //LoginService
+            //LoginService AdminLogin 
+            //LoginService loginService = new LoginService();
+            //_ = loginService.TryAdminLogin("ANAS", "1", out LoginToken<Administrator> token);
+            //Console.WriteLine(loginService);
+
+            //LoginService UserLogin
             LoginService loginService = new LoginService();
-            _ = loginService.TryAdminLogin("ANAS", "1", out LoginToken<Administrator> token);
-            Console.WriteLine(loginService);
+            _ = loginService.TryLogin("ANAS", "1", out ILoginToken token);
             
+
+            Console.ReadLine();
+
+            
+            
+
+
+
+
 
 
 
