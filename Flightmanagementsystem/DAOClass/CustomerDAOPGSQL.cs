@@ -103,11 +103,12 @@ namespace Flightmanagementsystem
             return customers;
         }
 
-        public Customer GetCustomerByUsername(string user)
+        //GetCustomerByUsername
+        public Customer GetCustomerByUsername(string username)
         {
             SQLConnection.SQLOpen(conSQL);
-            Customer c = null; ;
-            string cmdStr = @$"SELECT * FROM Customers WHERE USER_NAME = '{user}'";
+            Customer customer = new Customer();
+            string cmdStr = $"(SELECT Id FROM Users WHERE First_Name = {username})";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -115,25 +116,55 @@ namespace Flightmanagementsystem
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        c = new Customer
+                        customer = new Customer
                         {
-                            _Id = (int)reader["Id"],
+                            _Id = (Int64)reader["Id"],
                             _FirstName = (string)reader["First_Name"],
                             _LastName = (string)reader["Last_Name"],
                             _Address = (string)reader["Address"],
                             _PhoneNum = (string)reader["Phone_No"],
                             _CreditCardNum = (string)reader["Credit_Card_No"],
-                            _UserId = (int)reader["User_Id"],
+                            _UserId = (Int64)reader["User_Id"],
                         };
-                       
 
                     }
                 }
             }
-
             SQLConnection.SQLClose(conSQL);
-            return c;   
+            return customer;
         }
+
+        //public Customer GetCustomerByUsername(string user)
+        //{
+        //    SQLConnection.SQLOpen(conSQL);
+        //    Customer c = new Customer(); ;
+        //    string cmdStr = @$"SELECT * FROM Customers WHERE First_Name = '{user}'";
+        //    using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+        //    {
+        //        using (SqlDataReader reader = cmd.ExecuteReader())
+        //        {
+        //            if (reader.HasRows)
+        //            {
+        //                reader.Read();
+        //                c = new Customer
+        //                {
+        //                    _Id = (Int64)reader["Id"],
+        //                    _FirstName = (string)reader["First_Name"],
+        //                    _LastName = (string)reader["Last_Name"],
+        //                    _Address = (string)reader["Address"],
+        //                    _PhoneNum = (string)reader["Phone_No"],
+        //                    _CreditCardNum = (string)reader["Credit_Card_No"],
+        //                    _UserId = (Int64)reader["User_Id"],
+        //                };
+
+
+        //            }
+        //        }
+        //    }
+
+        //    SQLConnection.SQLClose(conSQL);
+        //    return c;
+        //}
 
         public void Remove(Customer t)
         {

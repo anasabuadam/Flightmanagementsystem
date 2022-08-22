@@ -27,23 +27,33 @@ namespace Flightmanagementsystem
         public override string ToString()
         {
             return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
+
+        }
+        public override bool Equals(object obj)
+        {
+            return obj is Administrator company &&
+                   Id == company.Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
+            return +Id.GetHashCode();
+        }
+        public static bool operator ==(Administrator administrator, Administrator administrator1)
+        {
+            return (administrator.Id == administrator1.Id);
         }
         public static bool operator !=(Administrator administrator, Administrator administrator1)
         {
             return !(administrator == administrator1);
         }
-        public static bool operator ==(Administrator administrator, Administrator administrator1)
-        {
-            return administrator == administrator1;
-        }
-        public override bool Equals(object obj) => obj is Administrator administrator &&
-                   Id == administrator.Id;
+
+
+
+
+
+
+
+
     }
-
-
 }

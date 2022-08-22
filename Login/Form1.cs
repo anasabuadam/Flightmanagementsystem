@@ -10,11 +10,16 @@ using System.Windows.Forms;
 using Flightmanagementsystem;
 using Flightmanagementsystem.BasicFolderClass;
 using Flightmanagementsystem.FacadeClass;
+using System;
 
 namespace Login
 {
     public partial class Form1 : Form
     {
+        FormAdmin FormAdmin = new FormAdmin();
+        Customer customer = new Customer();
+        UserForm userForm = new UserForm();
+        Administrator administrator1 = new Administrator();        
         public Form1()
         {
             InitializeComponent();
@@ -23,7 +28,7 @@ namespace Login
         private void button1_Click(object sender, EventArgs e)
         {
             Application.Exit();
-            
+
         }
 
 
@@ -39,34 +44,36 @@ namespace Login
             panel5.BackColor = Color.White;
             textBox2.BackColor = SystemColors.Control;
             panel5.BackColor = SystemColors.Control;
+
+
             
-
-
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            textBox2.Text = PasswordPropertyTextAttribute.Yes.Password.ToString();
-        }
 
-        private void button2_Click(object sender, EventArgs e )
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            LoginService loginService = new LoginService();
-            
-            if( _ = loginService.TryAdminLogin(textBox1.Text, textBox2.Text, out LoginToken<Administrator> token))
+
+            LoginService login = new LoginService();
+            LoginToken<Administrator> loginToken = new LoginToken<Administrator>();
+            _ = login.TryAdminLogin(textBox1.Text, textBox2.Text,out loginToken);
+            if(true)
             {
-                MessageBox.Show("Login Successful");
-               
+                userForm.Show();
+                this.Hide();
             }
-            MessageBox.Show("Login Failed");
-            
-           
-
-
-
-
-
-
+            else
+            {
+                throw new AccessViolationException("fild login");
+            }
         }
+        
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+  
     }
 }
+

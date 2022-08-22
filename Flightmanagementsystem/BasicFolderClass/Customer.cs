@@ -16,7 +16,7 @@ namespace Flightmanagementsystem
        
         public Customer() { }
 
-        public Customer(long id, string firstName, string lastName, string address, string phoneNum, string creditCardNum, long userId)
+        public Customer(Int64 id, string firstName, string lastName, string address, string phoneNum, string creditCardNum, Int64 userId)
         {
             _Id = id;
             _FirstName = firstName;

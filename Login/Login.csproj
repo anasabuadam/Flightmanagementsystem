@@ -6,15 +6,24 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>False</UseWPF>
+    <StartupObject>Login.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.16.1" />
     <PackageReference Include="Syncfusion.HighContrastTheme.WinForms" Version="20.2.0.36" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ConsoleTests\ConsoleTests.csproj" />
     <ProjectReference Include="..\Flightmanagementsystem\Flightmanagementsystem.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IrisSkin4">
+      <HintPath>..\..\..\IrisSkin4\IrisSkin4.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
