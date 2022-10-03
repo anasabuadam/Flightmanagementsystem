@@ -13,9 +13,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            FlightDAOPGSQL facade = new FlightDAOPGSQL();
-            IList<Flight> flights = facade.GetAll();
-            Console.WriteLine(flights);
+            //FlightDAOPGSQL facade = new FlightDAOPGSQL();
+            //IList<Flight> flights = facade.GetAll();
+            //Console.WriteLine(flights);
 
             //AnonymousUserFacade userFacade = new AnonymousUserFacade();
             //IList<AirlineCompany> airlines = userFacade.GetAllAirlineCompanies();
