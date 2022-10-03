@@ -15,11 +15,11 @@ namespace Flightmanagementsystem
         public Int64 _AirlineCompanyId { get; set; }
         public int _OriginCountryId { get; set; }
         public int _DestinationCountryId { get; set; }
-        public DateTime _DepartureTime { get; set; }
-        public DateTime _LandingTime { get; set; }
+        public string _DepartureTime { get; set; }
+        public string _LandingTime { get; set; }
         public int _RimainingTickets { get; set; }
 
-        public Flight(long id, long airlineCompanyId, int originCountryId, int destinationCountryId, DateTime departureTime, DateTime landingTime, int rimainingTickets)
+        public Flight(Int64 id, Int64 airlineCompanyId, int originCountryId, int destinationCountryId, string departureTime, string landingTime, int rimainingTickets)
         {
             _Id = id;
             _AirlineCompanyId = airlineCompanyId;

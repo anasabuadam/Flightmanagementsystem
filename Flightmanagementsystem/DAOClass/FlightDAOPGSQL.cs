@@ -20,8 +20,8 @@ namespace Flightmanagementsystem
             Int64 airlineCompanyId = t._AirlineCompanyId;
             int originCountryCode = t._OriginCountryId;
             int destinationCountryCode = t._DestinationCountryId;
-            DateTime departureTime = t._DepartureTime;
-            DateTime landingTime = t._LandingTime;
+            string departureTime = t._DepartureTime;
+            string landingTime = t._LandingTime;
             int remainingTickets = t._RimainingTickets;
    
             Flight f = GetByAllFields(airlineCompanyId, originCountryCode, destinationCountryCode, departureTime, landingTime);
@@ -63,12 +63,12 @@ namespace Flightmanagementsystem
                             reader.Read();
                             f = new Flight
                             {
-                                _Id = (int)reader["id"],
-                                _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                                _Id = (Int64)reader["id"],
+                                _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                                 _OriginCountryId = (int)reader["Origin_Country_Id"],
                                 _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                                _DepartureTime = (DateTime)reader["Departure_Time"],
-                                _LandingTime = (DateTime)reader["Landing_Time"],
+                                _DepartureTime = (string)reader["Departure_Time"],
+                                _LandingTime = (string)reader["Landing_Time"],
                                 _RimainingTickets = (int)reader["Remaining_Tickets"]
       
                             };
@@ -82,7 +82,7 @@ namespace Flightmanagementsystem
         }
             
 
-        public Flight GetByAllFields(Int64 airlineCompanyId, int originCountryCode, int destinationCountryCode, DateTime departureTime, DateTime landingTime)
+        public Flight GetByAllFields(Int64 airlineCompanyId, int originCountryCode, int destinationCountryCode, string departureTime, string landingTime)
         {
             SQLConnection.SQLOpen(conSQL);
             Flight f = null;
@@ -98,12 +98,12 @@ namespace Flightmanagementsystem
                         reader.Read();
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -128,12 +128,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -177,12 +177,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -208,12 +208,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -239,12 +239,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -270,12 +270,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -301,12 +301,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -332,12 +332,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -419,12 +419,12 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (int)reader["id"],
-                            _AirlineCompanyId = (int)reader["Airline_Company_Id"],
+                            _Id = (Int64)reader["id"],
+                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                            _DepartureTime = (DateTime)reader["Departure_Time"],
-                            _LandingTime = (DateTime)reader["Landing_Time"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
                             _RimainingTickets = (int)reader["Remaining_Tickets"]
                         };
 
@@ -445,8 +445,8 @@ namespace Flightmanagementsystem
             Int64 airlineCompanyId = flight._AirlineCompanyId;
             int originCountryCode = flight._OriginCountryId;
             int destinationCountryCode = flight._DestinationCountryId;
-            DateTime departureTime = flight._DepartureTime;
-            DateTime landingTime = flight._LandingTime;
+            string departureTime = flight._DepartureTime;
+            string landingTime = flight._LandingTime;
 
             SQLConnection.SQLOpen(conSQL);
             string cmdStr = $"INSERT INTO FlightsHistory VALUES({flight._Id},{ airlineCompanyId}," +
