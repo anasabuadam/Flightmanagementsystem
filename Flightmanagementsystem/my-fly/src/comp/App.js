@@ -1,22 +1,21 @@
 import React from 'react';
-import { createRoot, useEffect } from 'react-dom';
-import Header from '../Header';
-import Text from '../Text';
-import Social from '../Social';
-import DownBar from '../DownBar';
+import {BrowserRouter as Router,Switch,Route , } from 'react-dom'
+
+
+
 
 
 function App() {
-  return (
-      <div className="container">
-          <Header />
-          <text />
-          <Social />
-          <DownBar />
+    return (
+        <div>
+           hello
+        </div>
 
-    </div>
+
     )
 
+
+  
 }
 
 export default App;
