@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
     public interface IBasicDb<T>
     {

@@ -1,23 +1,23 @@
-﻿using Flightmanagementsystem.DAOClass;
+﻿using Flightmanagementsystem.BasicFolderClass;
 using Flightmanagementsystem.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
 
     public class TicketDAOMSSQL : ITicketDAO
     {
         static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
-        Ticket Ticket = new Ticket();   
+        Ticket Ticket = new Ticket();
         void IBasicDb<Ticket>.Add(Ticket t)
         {
             int result = 0;
-            Int64 id = t._Id;
-            Int64 flightId = t.FlightId;
-            Int64 customerId = t.CustomerId;
+            long id = t._Id;
+            long flightId = t.FlightId;
+            long customerId = t.CustomerId;
 
             Ticket ticket = GetByAllFields(flightId, customerId);
 
@@ -37,7 +37,7 @@ namespace Flightmanagementsystem
                 throw new TicketAlreadyExistsException($"The flight already exists with ID {ticket._Id}");
             }
 
-            
+
         }
 
 
@@ -95,7 +95,7 @@ namespace Flightmanagementsystem
             return tickets;
         }
 
-        public void Remove(Ticket  t)
+        public void Remove(Ticket t)
         {
             Ticket ticket = new Ticket();
             if (ticket is null)
@@ -103,7 +103,7 @@ namespace Flightmanagementsystem
                 throw new TicketNotFoundException($"The ticket  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"DELETE FROM Tickets WHERE id = { t._Id }";
+            string cmdStr = $"DELETE FROM Tickets WHERE id = {t._Id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -127,7 +127,7 @@ namespace Flightmanagementsystem
             }
             SQLConnection.SQLClose(conSQL);
         }
-        public Ticket GetByAllFields(Int64 flightId, Int64 customerId)
+        public Ticket GetByAllFields(long flightId, long customerId)
         {
             SQLConnection.SQLOpen(conSQL);
             Ticket ticket = null;

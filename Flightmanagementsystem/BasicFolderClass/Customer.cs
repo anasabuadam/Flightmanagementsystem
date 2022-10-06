@@ -1,22 +1,22 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
 
     public class Customer : IPoco, IUser
 
     {
-        public Int64 _Id { get; set; }
+        public long _Id { get; set; }
         public string _FirstName { get; set; }
         public string _LastName { get; set; }
         public string _Address { get; set; }
         public string _PhoneNum { get; set; }
         public string _CreditCardNum { get; set; }
-        public Int64 _UserId { get; set; }
-       
+        public long _UserId { get; set; }
+
         public Customer() { }
 
-        public Customer(Int64 id, string firstName, string lastName, string address, string phoneNum, string creditCardNum, Int64 userId)
+        public Customer(long id, string firstName, string lastName, string address, string phoneNum, string creditCardNum, long userId)
         {
             _Id = id;
             _FirstName = firstName;
@@ -35,12 +35,12 @@ namespace Flightmanagementsystem
 
         public override string ToString()
         {
-            return ($"Customer {_Id} ,{_FirstName}, {_LastName}, {_Address}, {_PhoneNum}, {_CreditCardNum}");
+            return $"Customer {_Id} ,{_FirstName}, {_LastName}, {_Address}, {_PhoneNum}, {_CreditCardNum}";
         }
 
         public override int GetHashCode()
         {
-            return + _Id.GetHashCode();
+            return +_Id.GetHashCode();
         }
 
         public static bool operator ==(Customer customer, Customer customer1)
@@ -49,7 +49,7 @@ namespace Flightmanagementsystem
                 return true;
             if (customer == null && customer1 != null || customer1 == null && customer != null)
                 return false;
-            return (customer._Id == customer1._Id);
+            return customer._Id == customer1._Id;
         }
         public static bool operator !=(Customer customer, Customer customer1)
         {

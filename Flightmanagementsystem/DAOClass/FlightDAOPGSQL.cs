@@ -1,11 +1,10 @@
 ﻿using Flightmanagementsystem.BasicFolderClass;
-using Flightmanagementsystem.DAOClass;
 using Flightmanagementsystem.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
     public class FlightDAOPGSQL : IFlightDAO
     {
@@ -16,14 +15,14 @@ namespace Flightmanagementsystem
         {
 
             int result = 0;
-            Int64 id = t._Id;
-            Int64 airlineCompanyId = t._AirlineCompanyId;
+            long id = t._Id;
+            long airlineCompanyId = t._AirlineCompanyId;
             int originCountryCode = t._OriginCountryId;
             int destinationCountryCode = t._DestinationCountryId;
             string departureTime = t._DepartureTime;
             string landingTime = t._LandingTime;
             int remainingTickets = t._RimainingTickets;
-   
+
             Flight f = GetByAllFields(airlineCompanyId, originCountryCode, destinationCountryCode, departureTime, landingTime);
 
             if (f is null)
@@ -43,46 +42,46 @@ namespace Flightmanagementsystem
             {
                 throw new FlighAlreadyExistsException($"The flight already exists with ID {f._Id}");
             }
-         
-          
+
+
         }
 
         public Flight Get(long id)
         {
-           
 
-                SQLConnection.SQLOpen(conSQL);
-                Flight f = null;
-                string cmdStr = $"SELECT * FROM Flights WHERE ID = {id}";
-                using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+
+            SQLConnection.SQLOpen(conSQL);
+            Flight f = null;
+            string cmdStr = $"SELECT * FROM Flights WHERE ID = {id}";
+            using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    if (reader.HasRows)
                     {
-                        if (reader.HasRows)
+                        reader.Read();
+                        f = new Flight
                         {
-                            reader.Read();
-                            f = new Flight
-                            {
-                                _Id = (Int64)reader["id"],
-                                _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
-                                _OriginCountryId = (int)reader["Origin_Country_Id"],
-                                _DestinationCountryId = (int)reader["Destination_Country_Id"],
-                                _DepartureTime = (string)reader["Departure_Time"],
-                                _LandingTime = (string)reader["Landing_Time"],
-                                _RimainingTickets = (int)reader["Remaining_Tickets"]
-      
-                            };
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
+                            _OriginCountryId = (int)reader["Origin_Country_Id"],
+                            _DestinationCountryId = (int)reader["Destination_Country_Id"],
+                            _DepartureTime = (string)reader["Departure_Time"],
+                            _LandingTime = (string)reader["Landing_Time"],
+                            _RimainingTickets = (int)reader["Remaining_Tickets"]
 
-                        }
+                        };
+
                     }
-            
                 }
+
+            }
             SQLConnection.SQLClose(conSQL);
             return f;
         }
-            
 
-        public Flight GetByAllFields(Int64 airlineCompanyId, int originCountryCode, int destinationCountryCode, string departureTime, string landingTime)
+
+        public Flight GetByAllFields(long airlineCompanyId, int originCountryCode, int destinationCountryCode, string departureTime, string landingTime)
         {
             SQLConnection.SQLOpen(conSQL);
             Flight f = null;
@@ -98,8 +97,8 @@ namespace Flightmanagementsystem
                         reader.Read();
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -113,7 +112,7 @@ namespace Flightmanagementsystem
             SQLConnection.SQLClose(conSQL);
             return f;
         }
-       public IList<Flight>  GetAll()
+        public IList<Flight> GetAll()
         {
             SQLConnection.SQLOpen(conSQL);
             List<Flight> flights = new List<Flight>();
@@ -128,8 +127,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -177,8 +176,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -208,8 +207,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -239,8 +238,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -270,8 +269,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -301,8 +300,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -332,8 +331,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -357,7 +356,7 @@ namespace Flightmanagementsystem
                 throw new FlightNotFoundException($"The flight  with id {t._Id} does not exist");
             }
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"DELETE FROM Flights WHERE id = { t._Id }";
+            string cmdStr = $"DELETE FROM Flights WHERE id = {t._Id}";
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
             {
                 cmd.ExecuteNonQuery();
@@ -367,7 +366,7 @@ namespace Flightmanagementsystem
 
         public void Update(Flight t)
         {
-            Flight f =new Flight();
+            Flight f = new Flight();
             if (f is null)
             {
                 throw new FlightNotFoundException($"The flight  with id {t._Id} does not exist");
@@ -419,8 +418,8 @@ namespace Flightmanagementsystem
                     {
                         f = new Flight
                         {
-                            _Id = (Int64)reader["id"],
-                            _AirlineCompanyId = (Int64)reader["Airline_Company_Id"],
+                            _Id = (long)reader["id"],
+                            _AirlineCompanyId = (long)reader["Airline_Company_Id"],
                             _OriginCountryId = (int)reader["Origin_Country_Id"],
                             _DestinationCountryId = (int)reader["Destination_Country_Id"],
                             _DepartureTime = (string)reader["Departure_Time"],
@@ -437,19 +436,19 @@ namespace Flightmanagementsystem
         }
         public void TransferFlightToHistory(Flight flight)
         {
-            Flight f =new Flight();
+            Flight f = new Flight();
             if (f is null)
             {
                 throw new FlightNotFoundException($"The flight  with id {flight._Id} does not exist");
             }
-            Int64 airlineCompanyId = flight._AirlineCompanyId;
+            long airlineCompanyId = flight._AirlineCompanyId;
             int originCountryCode = flight._OriginCountryId;
             int destinationCountryCode = flight._DestinationCountryId;
             string departureTime = flight._DepartureTime;
             string landingTime = flight._LandingTime;
 
             SQLConnection.SQLOpen(conSQL);
-            string cmdStr = $"INSERT INTO FlightsHistory VALUES({flight._Id},{ airlineCompanyId}," +
+            string cmdStr = $"INSERT INTO FlightsHistory VALUES({flight._Id},{airlineCompanyId}," +
                     $"{originCountryCode},{destinationCountryCode},'{departureTime}','{landingTime}')";
 
             using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))

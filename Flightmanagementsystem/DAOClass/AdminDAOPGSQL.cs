@@ -1,11 +1,11 @@
-﻿using Flightmanagementsystem.DAOClass;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Flightmanagementsystem.BasicFolderClass;
 using Flightmanagementsystem.Exceptions;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
     public class AdminDAOPGSQL : IAdminDAO
     {
@@ -13,11 +13,11 @@ namespace Flightmanagementsystem
         public void Add(Administrator t)
         {
             int result = 0;
-            Int64 id = t.Id;
+            long id = t.Id;
             string firstName = t.First_Name;
             string lastName = t.Last_Name;
             int level = t.Level;
-            Int64 userid = t.User_Id;
+            long userid = t.User_Id;
             Administrator admin = Get(t.Id);
             if (admin is null)
             {
@@ -49,11 +49,11 @@ namespace Flightmanagementsystem
                         reader.Read();
                         administrator = new Administrator
                         {
-                            Id = (Int64)reader["Id"],
+                            Id = (long)reader["Id"],
                             First_Name = (string)reader["First_Name"],
                             Last_Name = (string)reader["Last_Name"],
                             Level = (int)reader["Level"],
-                            User_Id = (Int64)reader["User_Id"]
+                            User_Id = (long)reader["User_Id"]
 
                         };
 
@@ -80,11 +80,11 @@ namespace Flightmanagementsystem
 
                         administrator1 = new Administrator
                         {
-                            Id = (Int64)reader["Id"],
+                            Id = (long)reader["Id"],
                             First_Name = (string)reader["First_Name"],
                             Last_Name = (string)reader["Last_Name"],
                             Level = (int)reader["Level"],
-                            User_Id = (Int64)reader["User_Id"]
+                            User_Id = (long)reader["User_Id"]
                         };
                         administratorr.Add(administrator1);
                     }

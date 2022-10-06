@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
     public class UserRoles : IUser
     {
-        public Int32 Id { get; set; }
+        public int Id { get; set; }
         public string Role_Name { get; set; }
 
         public UserRoles()

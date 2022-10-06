@@ -1,14 +1,14 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
     public class User : IPoco, IUser
     {
-        public Int64 _Id { get; set; }
+        public long _Id { get; set; }
         public string _Username { get; set; }
         public string _Password { get; set; }
         public string _Email { get; set; }
-        public Int32 _User_Role { get; set; }
+        public int _User_Role { get; set; }
 
         public User()
         {

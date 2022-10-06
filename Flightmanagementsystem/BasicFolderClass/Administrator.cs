@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
     public class Administrator : IPoco, IUser
     {
         User User = new User();
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public int Level { get; set; }
-        public Int64 User_Id { get; set; }
+        public long User_Id { get; set; }
 
         public Administrator()
         {
@@ -41,7 +41,7 @@ namespace Flightmanagementsystem
         }
         public static bool operator ==(Administrator administrator, Administrator administrator1)
         {
-            return (administrator.Id == administrator1.Id);
+            return administrator.Id == administrator1.Id;
         }
         public static bool operator !=(Administrator administrator, Administrator administrator1)
         {

@@ -1,10 +1,10 @@
-﻿using Flightmanagementsystem.BasicFolderClass;
+﻿using Flightmanagementsystem.DAOClass;
 using Flightmanagementsystem.Exceptions;
 using Flightmanagementsystem.FacadeClass;
 using System;
 using System.Collections.Generic;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
 
     public class LoginService : ILoginService
@@ -12,19 +12,19 @@ namespace Flightmanagementsystem
         private IAirlineDAO _airlineDAO;
         private ICustomerDAO _customerDAO;
         private IAdminDAO _administratorDAO;
-        
-        
+
+
         public bool TryAdminLogin(string userName, string password, out LoginToken<Administrator> token)
         {
-            
+
             bool result = false;
             token = new LoginToken<Administrator>();
             _administratorDAO = new AdminDAOPGSQL();
             Administrator administrator = _administratorDAO.Get(Convert.ToInt64(password));
-            if (userName ==  administrator.First_Name || password == administrator.Id.ToString())
+            if (userName == administrator.First_Name || password == administrator.Id.ToString())
             {
                 token = new LoginToken<Administrator>();
-                token._user = new  Administrator();
+                token._user = new Administrator();
                 result = true;
             }
             else
@@ -67,7 +67,7 @@ namespace Flightmanagementsystem
             bool result = false;
             token = new LoginToken<Customer>();
             Customer customer = new Customer();
-            
+
             _customerDAO = new CustomerDAOPGSQL();
             CustomerDAOPGSQL _customerDAO1 = (CustomerDAOPGSQL)_customerDAO;
             customer = _customerDAO1.GetCustomerByUsername(userName);
@@ -81,15 +81,15 @@ namespace Flightmanagementsystem
                     }
                     else
                     {
-                        
+
                         token = new LoginToken<Customer>();
-                        token._user = customer; 
+                        token._user = customer;
                         result = true;
-                        
+
                     }
                     throw new WrongPasswordException("This password is wrong");
                 }
-               
+
             }
             return result;
         }
@@ -105,14 +105,14 @@ namespace Flightmanagementsystem
                 token = tokenA;
             else
             {
-                LoginToken<AirlineCompany> tokenAC = new  LoginToken<AirlineCompany>();
-                result = TryAirlineLogin(airline._Name , airline._id.ToString(), out tokenAC);
+                LoginToken<AirlineCompany> tokenAC = new LoginToken<AirlineCompany>();
+                result = TryAirlineLogin(airline._Name, airline._id.ToString(), out tokenAC);
                 if (result == true)
                     token = tokenAC;
                 else
                 {
                     LoginToken<Customer> tokenC = new LoginToken<Customer>();
-                    result = TryCustomerLogin(customer._FirstName, customer._Id.ToString(), out LoginToken<Customer> tokin) ;
+                    result = TryCustomerLogin(customer._FirstName, customer._Id.ToString(), out LoginToken<Customer> tokin);
                     if (result == true)
                         tokin = tokenC;
                     else
@@ -121,7 +121,7 @@ namespace Flightmanagementsystem
 
             }
 
-            token = new  LoginToken<Administrator>();
+            token = new LoginToken<Administrator>();
             return result;
 
 

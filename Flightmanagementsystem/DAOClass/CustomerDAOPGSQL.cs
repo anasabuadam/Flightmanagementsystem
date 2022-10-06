@@ -1,13 +1,13 @@
-﻿using Flightmanagementsystem.DAOClass;
+﻿using Flightmanagementsystem.BasicFolderClass;
 using Flightmanagementsystem.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
-    public class  CustomerDAOPGSQL : Customer , ICustomerDAO
+    public class CustomerDAOPGSQL : Customer, ICustomerDAO
     {
 
 
@@ -16,13 +16,13 @@ namespace Flightmanagementsystem
         {
 
             int result = 0;
-            Int64 id = t._Id;
-            string firstName = t._FirstName; 
+            long id = t._Id;
+            string firstName = t._FirstName;
             string lastName = t._LastName;
             string address = t._Address;
             string phonenum = t._PhoneNum;
             string creditCardNumber = t._CreditCardNum;
-            Int64 userid = t._UserId;
+            long userid = t._UserId;
             Customer customer = GetCustomerByUsername("");
 
             if (customer is null)
@@ -118,13 +118,13 @@ namespace Flightmanagementsystem
                         reader.Read();
                         customer = new Customer
                         {
-                            _Id = (Int64)reader["Id"],
+                            _Id = (long)reader["Id"],
                             _FirstName = (string)reader["First_Name"],
                             _LastName = (string)reader["Last_Name"],
                             _Address = (string)reader["Address"],
                             _PhoneNum = (string)reader["Phone_No"],
                             _CreditCardNum = (string)reader["Credit_Card_No"],
-                            _UserId = (Int64)reader["User_Id"],
+                            _UserId = (long)reader["User_Id"],
                         };
 
                     }

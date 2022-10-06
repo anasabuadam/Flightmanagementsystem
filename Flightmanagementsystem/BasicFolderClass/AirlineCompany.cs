@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
     public class AirlineCompany : IPoco, IUser
     {
-        public Int64 _id { get; set; }
+        public long _id { get; set; }
         public string _Name { get; set; }
-       public int CountryId { get; set; }
-        public Int64 User_Id { get; set; }
-       
+        public int CountryId { get; set; }
+        public long User_Id { get; set; }
 
-      
+
+
         public AirlineCompany() { }
 
         public AirlineCompany(long id, string name, int countryId, long user_Id)
@@ -29,16 +29,16 @@ namespace Flightmanagementsystem
 
         public override int GetHashCode()
         {
-            return + _id.GetHashCode();
+            return +_id.GetHashCode();
         }
 
         public override string ToString()
         {
-            return ($"AirlineCompany {_id} ,{_Name}, {CountryId},  {User_Id}");
+            return $"AirlineCompany {_id} ,{_Name}, {CountryId},  {User_Id}";
         }
         public static bool operator ==(AirlineCompany ac1, AirlineCompany ac2)
         {
-            return (ac1._id == ac2._id);
+            return ac1._id == ac2._id;
         }
         public static bool operator !=(AirlineCompany ac1, AirlineCompany ac2)
         {

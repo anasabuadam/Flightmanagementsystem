@@ -1,4 +1,6 @@
-﻿namespace Flightmanagementsystem
+﻿using Flightmanagementsystem.BasicFolderClass;
+
+namespace Flightmanagementsystem.DAOClass
 {
     public interface ICustomerDAO : IBasicDb<Customer>
     {

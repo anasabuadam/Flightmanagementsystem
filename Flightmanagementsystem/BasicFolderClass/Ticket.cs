@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.BasicFolderClass
 {
 
     public class Ticket : IPoco, IUser
     {
-        public Int64 _Id { get; set; }
-        public Int64 FlightId { get; set; }
-        public Int64 CustomerId { get; set; }
+        public long _Id { get; set; }
+        public long FlightId { get; set; }
+        public long CustomerId { get; set; }
 
-        
-    
+
+
 
 
         public Ticket() { }
@@ -35,14 +35,14 @@ namespace Flightmanagementsystem
 
         public override string ToString()
         {
-            return ($"Ticket {_Id} ,{FlightId}, {CustomerId}");
+            return $"Ticket {_Id} ,{FlightId}, {CustomerId}";
         }
 
 
 
         public static bool operator ==(Ticket t1, Ticket t2)
         {
-            return (t1._Id == t2._Id);
+            return t1._Id == t2._Id;
         }
         public static bool operator !=(Ticket t1, Ticket t2)
         {

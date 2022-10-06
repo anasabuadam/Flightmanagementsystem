@@ -1,6 +1,6 @@
 ﻿using Flightmanagementsystem.DAOClass;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.FacadeClass
 {
     public abstract class FacadeBase
     {

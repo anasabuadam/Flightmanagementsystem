@@ -1,11 +1,11 @@
-﻿using Flightmanagementsystem.DAOClass;
+﻿using Flightmanagementsystem.BasicFolderClass;
 using Flightmanagementsystem.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Flightmanagementsystem
+namespace Flightmanagementsystem.DAOClass
 {
 
     public class CountryDAOMSSQL : ICountryDAO
@@ -41,7 +41,7 @@ namespace Flightmanagementsystem
 
             }
             SQLConnection.SQLClose(conSQL);
-            
+
         }
 
         public Country Get(long id)
@@ -163,7 +163,7 @@ namespace Flightmanagementsystem
 
 
 
-     
+
 
 
 

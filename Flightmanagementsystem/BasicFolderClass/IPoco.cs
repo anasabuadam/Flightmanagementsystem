@@ -1,4 +1,4 @@
-﻿namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem.BasicFolderClass
 {
     public interface IPoco
     {

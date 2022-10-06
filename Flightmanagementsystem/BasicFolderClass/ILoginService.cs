@@ -1,6 +1,4 @@
-﻿using Flightmanagementsystem.BasicFolderClass;
-
-namespace Flightmanagementsystem
+﻿namespace Flightmanagementsystem.BasicFolderClass
 {
     interface ILoginService
     {
