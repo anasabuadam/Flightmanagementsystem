@@ -2,12 +2,27 @@
   "name": "my-fly",
   "version": "1.0.0",
   "description": "test",
-  "main": "./comp/server.js",
-  "devDependencies": {},
+  "main": "./src/comp/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node server.js"
+    "start": "node server.js"
   },
   "author": "Anas",
-  "license": "ISC"
+  "license": "ISC",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "dependencies": {
+      "express": "^4.18.1",
+      "type": "module"
+        
+
+    },
+    "devDependencies": {},
+    "keywords": []
+     
+
+    
+  }
 }

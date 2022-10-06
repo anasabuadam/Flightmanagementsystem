@@ -1,24 +1,30 @@
-import React from 'react';
-import ReactDom from 'react-dom';
 import App from './comp/App';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import server from './comp/server'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
-
-
-ReactDom.render(
-   <BrowserRouter>
+ReactDOM.render(
+    <browserHistory>
         <Route>
             
-            <Switch>
+            <switch>
+                <Router>
+
+
+     
+
                 <server />
+                <App />
                 
-                </Switch>
+                    <server />
+                </Router>
+            </switch>
             </Route>
         
         
         
-        </BrowserRouter>
+    </browserHistory>
    ,
     document.getElementById("root"))
 
