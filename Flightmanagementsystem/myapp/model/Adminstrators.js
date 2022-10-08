@@ -1,30 +1,17 @@
-﻿const mongoose = require('mongoose');
+﻿
+class AdminStrators {
 
-const Schema = mongoose.Schema;
+    constructor(Id, First_Name, Last_Name, Level, User_Id) {
+        this.Id = Id;
+        this.First_Name = First_Name;
+        this.Last_Name = Last_Name;
+        this.Level = Level;
+        this.User_Id = User_Id;
 
-const  adminstratorsSchema = new Schema({
-    Id: {
-        type: Array,
-    },
-    First_Name: {
-        type: String,
-        required: true
-    },
-    Last_Name: {
-        type: String,
-        required: true,
-      
-    },
 
-    Level: {
-        type: Array,
-        required: true,
-        unique: true,
-    },
-    User_Id: {
-        type: Array,
     }
-})
+}
 
-module.exports = mongoose.model('Adminstrators', adminstratorsSchema);
 
+
+module.exports = AdminStrators;

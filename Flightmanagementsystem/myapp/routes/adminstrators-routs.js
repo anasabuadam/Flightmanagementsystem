@@ -1,10 +1,21 @@
 ﻿const express = require('express');
 const Adminstrators = require('../controllers/adminstrators-controller');
-const { Router } = require('express');
+const { dboperations, getadminbyid, getAdmin } = require('../dboperations');
+const { route } = require('./customers-routs');
+
 
 
 const router = express.Router();
 
-router.get("/Adminstrators", Adminstrators);
+router.route("/").get((res) => {
 
-module.exports = router
+    dboperations.getAdmin().then(ress => {
+        ress.json(ress);
+        console.log(ress);
+
+    });
+})
+
+    module.exports = router;
+
+

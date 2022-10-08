@@ -1,34 +1,30 @@
-﻿const express = require('express');
-const sql = require("mssql");
-const app = express();
-const User = require('./model/User');
-const getUser = require("./controllers/user-controller");
-const config = require('./Server')
+﻿
+var express = require('express');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var app = express();
+const { dboperations } = require('../myapp/dboperations');
+const adminstratorsrouts = require('../myapp/routes/adminstrators-routs');
+const router = express.Router();
 
-//Data Source=DESKTOP-LCKHR3P\MSSQLSERVER2019;Initial Catalog=FlightManagementSystem;Persist Security Info=True;User ID=anas;Password=***********/
-app.get("/", function (req, res) {
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use('/api', router);
 
-    sql.connect(config, function (err) {
 
-        if (err) console.log(err);
+var port = process.env.port || 1433;
+app.listen(port);
+console.log("admin is runnig at " + port);
 
-        // create Request object
-        var request = new sql.Request();
 
-        // query to the database and get the records
-        request.query('select * from User', function (err, recordset) {
+router.route("/admin",adminstratorsrouts).get((res => {
 
-            if (err) console.log(err)
+    dboperations.getAdmin().then(ress => {
+        res.json(ress);
+        console.log(ress);
 
-            // send records as a response
-            res.send(recordset);
-
-            /******************************************************************/
-
-        });
     });
-});
+}))
 
-var config = app.listen(5000, function () {
-    console.log('Server is running..');
-});
+
