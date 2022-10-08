@@ -7,11 +7,11 @@
 const getUser =  (req, res, next) => {
 
     const user = new User({
-        Id: res.body.Id,
-        Username: res.body.Username,
-        Email: res.body.Email,
-        Password: res.body.Password,
-        User_Role: res.body.User_Role,
+        Id: req.body.Id,
+        Username: req.body.Username,
+        Email: req.body.Email,
+        Password: req.body.Password,
+        User_Role: req.body.User_Role,
 
 
     });
