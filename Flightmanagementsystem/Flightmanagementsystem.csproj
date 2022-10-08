@@ -128,7 +128,6 @@
 
   <ItemGroup>
     <Folder Include="myapp\backend\" />
-    <Folder Include="myapp\frontend\" />
   </ItemGroup>
 
 </Project>
