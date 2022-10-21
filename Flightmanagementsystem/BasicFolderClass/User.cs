@@ -1,15 +1,28 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
-    public class User : IPoco, IUser
+    public class User 
     {
+        [Required]
+        [BindProperty]
         public long _Id { get; set; }
+        [Required]
+        [BindProperty]
         public string _Username { get; set; }
+        [Required]
+        [BindProperty]
         public string _Password { get; set; }
+        [Required]
+        [BindProperty]
         public string _Email { get; set; }
+        [Required]
+        [BindProperty]
         public int _User_Role { get; set; }
-
+        
         public User()
         {
 

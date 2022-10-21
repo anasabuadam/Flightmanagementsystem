@@ -1,7 +1,12 @@
-﻿namespace Flightmanagementsystem.BasicFolderClass
+﻿using Flightmanagementsystem.DAOClass;
+using System.Collections.Generic;
+
+namespace Flightmanagementsystem.BasicFolderClass
 {
     public interface IPoco
     {
+
+
 
     }
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using System;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
 
-    public class Country : IPoco, IUser
+    public class Country :  ICustomerDAO,IPoco
     {
         public long _id { get; set; }
         public string _Name { get; set; }

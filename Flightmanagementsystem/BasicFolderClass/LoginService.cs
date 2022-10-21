@@ -11,7 +11,7 @@ namespace Flightmanagementsystem.BasicFolderClass
     {
         private IAirlineDAO _airlineDAO;
         private ICustomerDAO _customerDAO;
-        private IAdminDAO _administratorDAO;
+        private AdminDAOPGSQL _administratorDAO;
 
 
         public bool TryAdminLogin(string userName, string password, out LoginToken<Administrator> token)

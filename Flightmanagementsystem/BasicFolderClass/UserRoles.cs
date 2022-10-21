@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using System;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
-    public class UserRoles : IUser
+    public class UserRoles 
     {
         public int Id { get; set; }
         public string Role_Name { get; set; }

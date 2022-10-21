@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Flightmanagementsystem.DAOClass
 {
-    public interface IAirlineDAO : IBasicDb<AirlineCompany>
+    public interface IAirlineDAO
     {
-        AirlineCompany GetAirlineByUserName(string name);
-        List<AirlineCompany> GetAllAirlinesCompanyByCountry(int countryId);
+ 
+
     }
 
 }

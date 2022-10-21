@@ -2,9 +2,9 @@
 
 namespace Flightmanagementsystem.DAOClass
 {
-    public interface ICustomerDAO : IBasicDb<Customer>
+    public interface ICustomerDAO 
     {
-        public Customer GetCustomerByUsername(string user);
+    
 
     }
 }

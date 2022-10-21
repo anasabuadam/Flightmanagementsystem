@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using System;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
 
-    public class Customer : IPoco, IUser
+    public class Customer :ICustomerDAO,IUser
 
     {
         public long _Id { get; set; }

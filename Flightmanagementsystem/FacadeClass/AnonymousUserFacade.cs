@@ -41,6 +41,11 @@ namespace Flightmanagementsystem.FacadeClass
             return _flightDAO1.GetAllFlightsVacancy();
         }
 
+
+
+
+
+
         //Flight IAnonymousUserFacade.GetFlightById(int id)
         public Flight GetFlightById(int id)
         {
@@ -77,6 +82,9 @@ namespace Flightmanagementsystem.FacadeClass
             return _flightDAO1.GetFlightsByOriginCountry(countryCode);
             
         }
+
+
+
     }
 }
 

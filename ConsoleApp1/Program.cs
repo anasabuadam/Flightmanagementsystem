@@ -57,6 +57,11 @@ namespace ConsoleApp1
             //adminDAOPGSQL.Remove(administrator);
             //    Console.ReadLine();
 
+            //User user = new User();
+            //UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
+            //user = userDAOPGSQL.Get(2);
+            //Console.ReadLine();
+
 
         }
     }

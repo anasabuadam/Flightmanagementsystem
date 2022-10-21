@@ -12,7 +12,7 @@ namespace Flightmanagementsystem.DAOClass
 
 
         static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
-        public int Add(Customer t)
+       public void Add(Customer t)
         {
 
             int result = 0;
@@ -23,7 +23,7 @@ namespace Flightmanagementsystem.DAOClass
             string phonenum = t._PhoneNum;
             string creditCardNumber = t._CreditCardNum;
             long userid = t._UserId;
-            Customer customer = GetCustomerByUsername("");
+            Customer customer = GetCustomerByUsername(t._FirstName);
 
             if (customer is null)
             {
@@ -32,6 +32,7 @@ namespace Flightmanagementsystem.DAOClass
                 using (SqlCommand cmd = new SqlCommand(cmdStr, conSQL))
                 {
                     result = Convert.ToInt32(cmd.ExecuteScalar());
+                    
                 }
                 SQLConnection.SQLClose(conSQL);
             }
@@ -41,7 +42,7 @@ namespace Flightmanagementsystem.DAOClass
                 throw new CustomerAlreadyExistsException($"The country {firstName} already exists with ID {customer._Id}");
             }
 
-            return result;
+         
         }
 
         public Customer Get(int id)
@@ -211,31 +212,6 @@ namespace Flightmanagementsystem.DAOClass
         }
 
 
-
-        void IBasicDb<Customer>.Add(Customer t)
-        {
-            throw new NotImplementedException();
-        }
-
-        Customer IBasicDb<Customer>.Get(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IList<Customer> IBasicDb<Customer>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IBasicDb<Customer>.Remove(Customer t)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IBasicDb<Customer>.Update(Customer t)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

@@ -7,7 +7,7 @@ using Flightmanagementsystem.Exceptions;
 
 namespace Flightmanagementsystem.DAOClass
 {
-    public class AdminDAOPGSQL : IAdminDAO
+    public class AdminDAOPGSQL :Administrator,  IAdminDAO
     {
         static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
         public void Add(Administrator t)

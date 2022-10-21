@@ -1,4 +1,6 @@
-﻿using Flightmanagementsystem.DAOClass;
+﻿using Flightmanagementsystem.BasicFolderClass;
+using Flightmanagementsystem.DAOClass;
+using IAirlineDAO = Flightmanagementsystem.DAOClass.IAirlineDAO;
 
 namespace Flightmanagementsystem.FacadeClass
 {
@@ -13,6 +15,8 @@ namespace Flightmanagementsystem.FacadeClass
         protected IFlightDAO _flightDAO;
 
         protected ITicketDAO _ticketDAO;
+        protected IUser _userDAO;
+        protected IUserRoles _userRoles;
 
 
 
@@ -23,6 +27,8 @@ namespace Flightmanagementsystem.FacadeClass
             _customerDAO = new CustomerDAOPGSQL();
             _flightDAO = new FlightDAOPGSQL();
             _ticketDAO = new TicketDAOMSSQL();
+            _userDAO = new UserDAOPGSQL();
+            _userRoles = new UserRolesDAOPGSQL();
 
         }
     }

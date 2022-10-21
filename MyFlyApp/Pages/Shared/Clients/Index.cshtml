@@ -1,0 +1,66 @@
+﻿@page
+@model MyFlyApp.Pages.Shared.Clients.IndexModel
+@{
+
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+<h1>@ViewData["Title"]</h1>
+
+<br>
+<div class="jumbotron text-center">
+    <h1>User Page</h1>
+</div>
+
+<p>
+    <a asp-page="CreateUser">Create New</a>
+</p>
+<table class="table  table-dark ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.users[0]._Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.users[0]._Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.users[0]._Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.users[0]._Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.users[0]._User_Role)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item._Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._User_Role)
+                </td>
+                <td>
+                    <a asp-page="./EditUser" asp-route-id="@item._Id">Edit</a> |
+                    <a asp-page="./DeleteUser" asp-route-id="@item._Id">Delete</a>
+                </td>
+            </tr>
+      
+        }
+    </tbody>
+</table>

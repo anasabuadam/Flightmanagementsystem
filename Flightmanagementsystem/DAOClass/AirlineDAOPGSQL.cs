@@ -8,10 +8,10 @@ using System.Data.SqlClient;
 namespace Flightmanagementsystem.DAOClass
 {
 
-    public class AirlineDAOMSSQL : IAirlineDAO
+    public class AirlineDAOMSSQL :AirlineCompany, IAirlineDAO,IBasicDb<AirlineCompany>
     {
         static SqlConnection conSQL = new SqlConnection(SQLConnection.conStr);
-        void IBasicDb<AirlineCompany>.Add(AirlineCompany t)
+         public void  Add(AirlineCompany t)
         {
             int result = 0;
             long id = t._id;
@@ -192,7 +192,6 @@ namespace Flightmanagementsystem.DAOClass
             }
             SQLConnection.SQLClose(conSQL);
         }
-
 
     }
 }

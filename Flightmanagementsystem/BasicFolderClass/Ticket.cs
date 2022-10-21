@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using System;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
 
-    public class Ticket : IPoco, IUser
+    public class Ticket :  IUser,ICustomerDAO
     {
         public long _Id { get; set; }
         public long FlightId { get; set; }

@@ -1,8 +1,9 @@
 ﻿using Flightmanagementsystem.BasicFolderClass;
+using System.Collections.Generic;
 
 namespace Flightmanagementsystem.DAOClass
 {
-    public interface IAdminDAO : IBasicDb<Administrator>
+    public interface IAdminDAO
     {
 
     }

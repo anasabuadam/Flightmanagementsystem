@@ -2,7 +2,7 @@
 
 namespace Flightmanagementsystem.DAOClass
 {
-    public interface IBasicDb<T>
+    public interface IBasicDb<T> 
     {
         public void Add(T t);
         public T Get(long id);

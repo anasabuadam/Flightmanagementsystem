@@ -1,15 +1,23 @@
-﻿using System;
+﻿using Flightmanagementsystem.DAOClass;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flightmanagementsystem.BasicFolderClass
 {
-    public class Administrator : IPoco, IUser
+    public class Administrator : IAdminDAO,IUser
     {
         User User = new User();
+        [Required]
         public long Id { get; set; }
+        [Required]
         public string First_Name { get; set; }
+        [Required]
         public string Last_Name { get; set; }
+        [Required]
         public int Level { get; set; }
+        [Required]
         public long User_Id { get; set; }
+    
 
         public Administrator()
         {
